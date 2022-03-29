@@ -35,7 +35,6 @@ class NowPlayingFragment : Fragment() {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_now_playing, container, false)
 
-
         val apiService : MovieInterface = MovieClient.getClient()
 
         nowPlayingMoviesPagedListRepo = NowPlayingMoviesPagedListRepo(apiService)
@@ -75,8 +74,6 @@ class NowPlayingFragment : Fragment() {
                 nowPlayingPagedListAdapter.setConnectionState(it)
             }
         })
-
-
 
         return  rootView;
     }

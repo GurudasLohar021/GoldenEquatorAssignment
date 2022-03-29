@@ -9,7 +9,7 @@ import androidx.viewpager.widget.ViewPager
 import com.example.goldenequatorassignment.R
 import com.example.goldenequatorassignment.adapter.FragmentAdapter
 import com.example.goldenequatorassignment.ui.home_page.NowPlayingFragment
-import com.example.goldenequatorassignment.ui.home_page.PopularFragment
+import com.example.goldenequatorassignment.ui.home_page.popular.PopularFragment
 import com.example.goldenequatorassignment.ui.home_page.TopRatedFragment
 import com.example.goldenequatorassignment.ui.home_page.UpcomingFragment
 import com.google.android.material.tabs.TabLayout

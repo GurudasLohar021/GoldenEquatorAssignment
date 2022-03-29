@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GoldenEquatorAssignment">
         <activity
-            android:name=".ui.movie_details_page.Movie_Details_Activity"
+            android:name=".ui.movie_details_page.MovieDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"

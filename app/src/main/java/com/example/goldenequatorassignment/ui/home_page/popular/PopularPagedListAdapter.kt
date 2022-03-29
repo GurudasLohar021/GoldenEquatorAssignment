@@ -1,4 +1,4 @@
-package com.example.goldenequatorassignment.ui.home_page.now_playing
+package com.example.goldenequatorassignment.ui.home_page.popular
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -14,38 +14,36 @@ import com.example.goldenequatorassignment.R
 import com.example.goldenequatorassignment.api.IMAGE_BASE_URL
 import com.example.goldenequatorassignment.repo.ConnectionState
 import com.example.goldenequatorassignment.ui.home_page.NowPlayingFragment
+import com.example.goldenequatorassignment.ui.home_page.now_playing.NowPlayingPagedListAdapter
 import com.example.goldenequatorassignment.ui.movie_details_page.MovieDetailsActivity
 import com.example.goldenequatorassignment.vm.now_playing.NowPlayingMovies
+import com.example.goldenequatorassignment.vm.popular.PopularMovies
 
+class PopularPagedListAdapter(public var context: PopularFragment)
+    : PagedListAdapter<PopularMovies, RecyclerView.ViewHolder>(PopularPagedListAdapter.PopularMovieDiffCallback()){
 
-class NowPlayingPagedListAdapter(public var context: NowPlayingFragment)
-    : PagedListAdapter<NowPlayingMovies, RecyclerView.ViewHolder> (NowPlayingMovieDiffCallback()){
-
-    val NOWPLAYING_VIEW_TYPE = 1
+    val POPULAR_VIEW_TYPE = 1
     val CONNECTION_VIEW_TYPE = 2
 
     private var connectionState: ConnectionState? = null
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
         val layoutInflater : LayoutInflater = LayoutInflater.from(parent.context)
         val view: View
 
-        if (viewType == NOWPLAYING_VIEW_TYPE){
+        if (viewType == POPULAR_VIEW_TYPE){
             view = layoutInflater.inflate(R.layout.movie_card_layout,parent,false)
-            return NowPlayingItemViewHolder(view)
+            return PopularItemViewHolder(view)
         }else{
             view = layoutInflater.inflate(R.layout.connection_status_layout,parent,false)
             return ConnectionStateItemViewHolder(view)
         }
-
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        if (getItemViewType(position) == NOWPLAYING_VIEW_TYPE){
-            (holder as NowPlayingItemViewHolder).bind(getItem(position),context)
+        if (getItemViewType(position) == POPULAR_VIEW_TYPE){
+            (holder as PopularItemViewHolder).bind(getItem(position),context)
         }else{
             (holder as ConnectionStateItemViewHolder).bind(connectionState)
         }
@@ -63,47 +61,49 @@ class NowPlayingPagedListAdapter(public var context: NowPlayingFragment)
         return if(hasExtraRow() && position == itemCount-1){
             CONNECTION_VIEW_TYPE
         }else{
-            NOWPLAYING_VIEW_TYPE
+            POPULAR_VIEW_TYPE
         }
     }
 
-    class NowPlayingMovieDiffCallback : DiffUtil.ItemCallback<NowPlayingMovies>(){
+
+    class PopularMovieDiffCallback : DiffUtil.ItemCallback<PopularMovies>(){
         override fun areItemsTheSame(
-            oldItem: NowPlayingMovies,
-            newItem: NowPlayingMovies
+            oldItem: PopularMovies,
+            newItem: PopularMovies
         ): Boolean {
-           return oldItem.id == newItem.id
+            return oldItem.id == newItem.id
         }
+
         override fun areContentsTheSame(
-            oldItem: NowPlayingMovies,
-            newItem: NowPlayingMovies
+            oldItem: PopularMovies,
+            newItem: PopularMovies
         ): Boolean {
             return oldItem == newItem
         }
     }
 
-    inner class NowPlayingItemViewHolder (view: View) : RecyclerView.ViewHolder(view){
+    inner class PopularItemViewHolder (view: View) : RecyclerView.ViewHolder(view){
 
-        fun bind(nowPlayingMovies: NowPlayingMovies?, context: NowPlayingFragment){
-            itemView.findViewById<TextView>(R.id.movie_title).text = nowPlayingMovies?.title
-            //itemView.findViewById<TextView>(R.id.movie_genre).text = nowPlayingMovies?.genre_ids.toString()
-            itemView.findViewById<TextView>(R.id.movie_release_date).text = nowPlayingMovies?.release_date
-            itemView.findViewById<TextView>(R.id.movie_vote_average).text = nowPlayingMovies?.vote_average.toString()
-            itemView.findViewById<TextView>(R.id.movie_vote_count).text = nowPlayingMovies?.vote_count.toString()
+        fun bind(popularMovies: PopularMovies?, context: PopularFragment){
+            itemView.findViewById<TextView>(R.id.movie_title).text = popularMovies?.title
+            //itemView.findViewById<TextView>(R.id.movie_genre).text = popularMovies?.genre_ids.toString()
+            itemView.findViewById<TextView>(R.id.movie_release_date).text = popularMovies?.release_date
+            itemView.findViewById<TextView>(R.id.movie_vote_average).text = popularMovies?.vote_average.toString()
+            itemView.findViewById<TextView>(R.id.movie_vote_count).text = popularMovies?.vote_count.toString()
 
-            val nowPlayingPosterURL = IMAGE_BASE_URL + nowPlayingMovies?.poster_path
+            val popularPosterURL = IMAGE_BASE_URL + popularMovies?.poster_path
             Glide.with(itemView.context)
-                .load(nowPlayingPosterURL)
+                .load(popularPosterURL)
                 .into(itemView.findViewById(R.id.movie_poster));
 
             itemView.setOnClickListener {
-                val intent = Intent(context.activity,MovieDetailsActivity::class.java)
-                intent.putExtra("id",nowPlayingMovies?.id)
+                val intent = Intent(context.activity, MovieDetailsActivity::class.java)
+                intent.putExtra("id",popularMovies?.id)
                 context.startActivity(intent)
             }
         }
-
     }
+
 
     class ConnectionStateItemViewHolder (view: View) :RecyclerView.ViewHolder(view){
 
@@ -144,4 +144,5 @@ class NowPlayingPagedListAdapter(public var context: NowPlayingFragment)
         }
 
     }
+
 }
