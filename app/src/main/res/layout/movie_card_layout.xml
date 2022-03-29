@@ -19,7 +19,7 @@
         android:layout_gravity="center">
 
         <ImageView
-            android:id="@+id/movieDetails_poster"
+            android:id="@+id/movie_poster"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
