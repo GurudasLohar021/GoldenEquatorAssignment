@@ -6,15 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.movie_details_page.MovieDetailsActivity">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
         <ProgressBar
             android:id="@+id/movieDetails_Progress"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:visibility="gone"/>
@@ -27,14 +27,30 @@
             android:text="Please Connect to Internet"
             android:visibility="gone"/>
 
-
-        <ImageView
-            android:id="@+id/movieDetails_backdrop"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_poster_placeholder"
-            android:scaleType="matrix"/>
+            android:layout_height="350dp"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/movieDetails_backdrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_poster_placeholder"
+                android:scaleType="matrix"/>
+
+            <CheckBox
+                android:id="@+id/movieDetails_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/selector_favoritelist_item"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="350dp"
+                app:useMaterialThemeColors = "false"/>
+
+        </androidx.cardview.widget.CardView>
+
 
         <ScrollView
             app:layout_constraintTop_toTopOf="parent"
@@ -108,7 +124,6 @@
                                     android:layout_marginTop="10dp"/>
 
                             </LinearLayout>
-
 
                         </LinearLayout>
 

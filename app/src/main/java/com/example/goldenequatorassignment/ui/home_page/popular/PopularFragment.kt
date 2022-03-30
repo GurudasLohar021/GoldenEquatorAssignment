@@ -69,7 +69,8 @@ class PopularFragment : Fragment() {
 
     private fun getViewModel() : PopularViewModel{
         return ViewModelProviders.of(this, object: ViewModelProvider.Factory{
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return PopularViewModel(popularMoviesPagedListRepo) as T
             }
         })[PopularViewModel::class.java]

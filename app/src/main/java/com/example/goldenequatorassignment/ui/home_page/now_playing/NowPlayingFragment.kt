@@ -80,7 +80,7 @@ class NowPlayingFragment : Fragment() {
 
     private fun getViewModel() : NowPlayingViewModel{
         return ViewModelProviders.of(this, object: ViewModelProvider.Factory{
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return NowPlayingViewModel(nowPlayingMoviesPagedListRepo) as T
             }
         })[NowPlayingViewModel::class.java]

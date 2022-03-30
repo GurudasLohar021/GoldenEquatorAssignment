@@ -3,8 +3,10 @@ package com.example.goldenequatorassignment.ui.movie_details_page
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.CheckBox
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -15,16 +17,26 @@ import com.example.goldenequatorassignment.api.IMAGE_BASE_URL
 import com.example.goldenequatorassignment.api.MovieClient
 import com.example.goldenequatorassignment.api.MovieInterface
 import com.example.goldenequatorassignment.repo.ConnectionState
+import com.example.goldenequatorassignment.ui.favorite_page.FavoriteMovieRepo
 import com.example.goldenequatorassignment.vm.movie_details.MovieDetails
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MovieDetailsActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MovieDetailsViewModel
     private lateinit var movieDetailsRepo: MovieDetailsRepo
+    private lateinit var favoriteMovieRepo: FavoriteMovieRepo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
+
+        var isChecked = false
 
         val movieId: Int = intent.getIntExtra("id", 1)
 
@@ -35,6 +47,33 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         viewModel.movieDetails.observe(this, Observer {
             bindUI(it)
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val count = viewModel.checkMovie(it.id.toString())
+                withContext(Dispatchers.Main){
+                    if (count > 0){
+                        findViewById<CheckBox>(R.id.movieDetails_favorite).isChecked = true
+                        isChecked = true
+                    }else{
+                        findViewById<CheckBox>(R.id.movieDetails_favorite).isChecked = false
+                        isChecked = false
+                    }
+                }
+            }
+
+            findViewById<CheckBox>(R.id.movieDetails_favorite).setOnCheckedChangeListener{ checkBox, isCheck ->
+                isChecked = !isChecked
+
+                if (isChecked){
+                    viewModel.addFavoriteMovie(it)
+                    Toast.makeText(this, "Added to Favorite List", Toast.LENGTH_LONG).show()
+                } else{
+                    viewModel.removeFromFavoriteMovie(it.id.toString())
+                    Toast.makeText(this, "Removed from Favorite List", Toast.LENGTH_LONG).show()
+                }
+
+                findViewById<CheckBox>(R.id.movieDetails_favorite).isChecked = isChecked
+            }
         })
 
         viewModel.connectionState.observe(this, Observer {
@@ -46,6 +85,9 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     fun bindUI (it: MovieDetails){
+        //val formattedDate = SimpleDateFormat("EE, MMM, dd, yyyy", Locale.US)
+        //val date : String = formattedDate .parse(it.release_date).toString()
+
         findViewById<TextView>(R.id.movieDetails_title).text = it.title
         findViewById<TextView>(R.id.movieDetails_tagline).text = it.tagline
         //findViewById<TextView>(R.id.movieDetails_genre).text = it.genres.toString()
@@ -70,8 +112,8 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     private fun getViewModel(movieId: Int) : MovieDetailsViewModel{
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory{
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return MovieDetailsViewModel(movieDetailsRepo, movieId) as T
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return MovieDetailsViewModel(movieDetailsRepo, favoriteMovieRepo ,movieId) as T
             }
         })[MovieDetailsViewModel::class.java]
     }
