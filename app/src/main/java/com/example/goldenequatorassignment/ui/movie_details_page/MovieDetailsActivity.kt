@@ -17,63 +17,32 @@ import com.example.goldenequatorassignment.api.IMAGE_BASE_URL
 import com.example.goldenequatorassignment.api.MovieClient
 import com.example.goldenequatorassignment.api.MovieInterface
 import com.example.goldenequatorassignment.repo.ConnectionState
-import com.example.goldenequatorassignment.ui.favorite_page.FavoriteMovieRepo
+import com.example.goldenequatorassignment.vm.favorite_movies.FavoriteMovieRepo
 import com.example.goldenequatorassignment.vm.movie_details.MovieDetails
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
-import java.util.*
 
 class MovieDetailsActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MovieDetailsViewModel
     private lateinit var movieDetailsRepo: MovieDetailsRepo
-    private lateinit var favoriteMovieRepo: FavoriteMovieRepo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
-
-        var isChecked = false
 
         val movieId: Int = intent.getIntExtra("id", 1)
 
         val apiService : MovieInterface = MovieClient.getClient()
         movieDetailsRepo = MovieDetailsRepo(apiService)
 
+
         viewModel = getViewModel(movieId)
 
         viewModel.movieDetails.observe(this, Observer {
             bindUI(it)
-
-            CoroutineScope(Dispatchers.IO).launch {
-                val count = viewModel.checkMovie(it.id.toString())
-                withContext(Dispatchers.Main){
-                    if (count > 0){
-                        findViewById<CheckBox>(R.id.movieDetails_favorite).isChecked = true
-                        isChecked = true
-                    }else{
-                        findViewById<CheckBox>(R.id.movieDetails_favorite).isChecked = false
-                        isChecked = false
-                    }
-                }
-            }
-
-            findViewById<CheckBox>(R.id.movieDetails_favorite).setOnCheckedChangeListener{ checkBox, isCheck ->
-                isChecked = !isChecked
-
-                if (isChecked){
-                    viewModel.addFavoriteMovie(it)
-                    Toast.makeText(this, "Added to Favorite List", Toast.LENGTH_LONG).show()
-                } else{
-                    viewModel.removeFromFavoriteMovie(it.id.toString())
-                    Toast.makeText(this, "Removed from Favorite List", Toast.LENGTH_LONG).show()
-                }
-
-                findViewById<CheckBox>(R.id.movieDetails_favorite).isChecked = isChecked
-            }
         })
 
         viewModel.connectionState.observe(this, Observer {
@@ -82,6 +51,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.movieDetails_Error).visibility =
                 if (it == ConnectionState.ERROR) View.VISIBLE else View.GONE
         })
+
     }
 
     fun bindUI (it: MovieDetails){
@@ -107,13 +77,30 @@ class MovieDetailsActivity : AppCompatActivity() {
         Glide.with(this)
             .load(moviePosterURL)
             .into(findViewById(R.id.movieDetails_poster));
+
+
+        var isChecked = false
+        findViewById<CheckBox>(R.id.movieDetails_favorite).setOnCheckedChangeListener{ checkBox, isCheck ->
+            isChecked = !isChecked
+
+            if (isChecked){
+                viewModel.addFavoriteMovie(it)
+                Toast.makeText(this, "Added to Favorite List", Toast.LENGTH_LONG).show()
+            } else{
+                viewModel.removeFromFavoriteMovie(it.id.toString())
+                Toast.makeText(this, "Removed from Favorite List", Toast.LENGTH_LONG).show()
+            }
+
+            findViewById<CheckBox>(R.id.movieDetails_favorite).isChecked = isChecked
+        }
+
     }
 
 
     private fun getViewModel(movieId: Int) : MovieDetailsViewModel{
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory{
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return MovieDetailsViewModel(movieDetailsRepo, favoriteMovieRepo ,movieId) as T
+                return MovieDetailsViewModel(movieDetailsRepo,movieId) as T
             }
         })[MovieDetailsViewModel::class.java]
     }

@@ -3,6 +3,8 @@ package com.example.goldenequatorassignment.api
 import com.example.goldenequatorassignment.vm.movie_details.MovieDetails
 import com.example.goldenequatorassignment.vm.now_playing.NowPlayingMoviesResponse
 import com.example.goldenequatorassignment.vm.popular.PopularMoviesResponse
+import com.example.goldenequatorassignment.vm.search_movies.SearchMovies
+import com.example.goldenequatorassignment.vm.search_movies.SearchMoviesResponse
 import com.example.goldenequatorassignment.vm.top_rated.TopRatedMoviesResponse
 import com.example.goldenequatorassignment.vm.upcoming.UpcomingMoviesResponse
 import io.reactivex.Single
@@ -26,5 +28,8 @@ interface MovieInterface {
 
     @GET("movie/{movie_id}")
     fun getMovieDetails(@Path("movie_id") id : Int) : Single<MovieDetails>
+
+    @GET("search/movie")
+    fun getSearchMovie(@Query("query") query : String, @Query("page") page : Int) : Single<SearchMoviesResponse>
 
 }

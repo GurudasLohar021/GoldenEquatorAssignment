@@ -17,6 +17,7 @@ class NowPlayingMovieDataSourceFactory
       val nowPlayingMoviesDataSource = NowPlayingMovieDataSource(apiService, compositeDisposable)
 
         nowPlayingMoviesLiveDataSource.postValue(nowPlayingMoviesDataSource)
+
          return nowPlayingMoviesDataSource
     }
 }

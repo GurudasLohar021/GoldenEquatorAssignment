@@ -1,4 +1,4 @@
-package com.example.goldenequatorassignment.ui.favorite_page
+package com.example.goldenequatorassignment.vm.favorite_movies
 
 import com.example.goldenequatorassignment.vm.favorite_movies.FavoriteMovieDao
 import com.example.goldenequatorassignment.vm.favorite_movies.FavoriteMovieDetails
@@ -9,6 +9,8 @@ class FavoriteMovieRepo  @Inject constructor(
 ){
     suspend fun addToFavorite(favoriteMovieDetails: FavoriteMovieDetails) =
         favoriteMovieDao.addToFavorite(favoriteMovieDetails)
+
+    fun getFavoriteMovies() = favoriteMovieDao.getFavoriteMovie()
 
     suspend fun checkMovie(id : String) = favoriteMovieDao.checkMovie(id)
 

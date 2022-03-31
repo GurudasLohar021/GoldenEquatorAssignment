@@ -18,7 +18,7 @@ class NowPlayingMoviesPagedListRepo (private val apiService : MovieInterface) {
     lateinit var nowPlayingPagedList : LiveData<PagedList<NowPlayingMovies>>
     lateinit var nowPlayingDataSourceFactory : NowPlayingMovieDataSourceFactory
 
-    fun fetchLiveNowPlayingPagedList
+    fun  fetchLiveNowPlayingPagedList
                 (compositeDisposable: CompositeDisposable)
                     : LiveData<PagedList<NowPlayingMovies>>{
 

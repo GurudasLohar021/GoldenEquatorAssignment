@@ -3,7 +3,7 @@ package com.example.goldenequatorassignment.ui.movie_details_page
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.goldenequatorassignment.repo.ConnectionState
-import com.example.goldenequatorassignment.ui.favorite_page.FavoriteMovieRepo
+import com.example.goldenequatorassignment.vm.favorite_movies.FavoriteMovieRepo
 import com.example.goldenequatorassignment.vm.favorite_movies.FavoriteMovieDetails
 import com.example.goldenequatorassignment.vm.movie_details.MovieDetails
 import io.reactivex.disposables.CompositeDisposable
@@ -11,7 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MovieDetailsViewModel(private val movieDetailsRepo: MovieDetailsRepo, private val favoriteMovieRepo: FavoriteMovieRepo,movieId: Int) : ViewModel(){
+class MovieDetailsViewModel(private val movieDetailsRepo: MovieDetailsRepo, movieId: Int) : ViewModel(){
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -25,7 +25,7 @@ class MovieDetailsViewModel(private val movieDetailsRepo: MovieDetailsRepo, priv
 
     fun addFavoriteMovie(movieDetails: MovieDetails){
         CoroutineScope(Dispatchers.IO).launch {
-            favoriteMovieRepo.addToFavorite(
+            movieDetailsRepo.addToFavorite(
                 FavoriteMovieDetails(
                     movieDetails.id,
                     movieDetails.poster_path,
@@ -39,11 +39,11 @@ class MovieDetailsViewModel(private val movieDetailsRepo: MovieDetailsRepo, priv
         }
     }
 
-    suspend fun checkMovie (id: String) = favoriteMovieRepo.checkMovie(id)
+    suspend fun checkMovie (id: String) = movieDetailsRepo.checkMovie(id)
 
     fun removeFromFavoriteMovie (id: String){
         CoroutineScope(Dispatchers.IO).launch {
-            favoriteMovieRepo.removeFromFavorite(id)
+            movieDetailsRepo.removeFromFavorite(id)
         }
     }
 
