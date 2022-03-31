@@ -5,15 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.goldenequatorassignment.R
 import com.example.goldenequatorassignment.api.IMAGE_BASE_URL
-import com.example.goldenequatorassignment.ui.home_page.NowPlayingFragment
-import com.example.goldenequatorassignment.ui.home_page.now_playing.NowPlayingPagedListAdapter
-import com.example.goldenequatorassignment.vm.favorite_movies.FavoriteMovieDetails
-import com.example.goldenequatorassignment.vm.now_playing.NowPlayingMovies
+import com.example.goldenequatorassignment.vo.favorite_movies.FavoriteMovieDetails
 
 class FavoriteMovieAdapter : RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteMovieViewHolder>() {
 

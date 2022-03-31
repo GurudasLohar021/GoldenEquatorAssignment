@@ -1,8 +1,8 @@
-package com.example.goldenequatorassignment.vm.search_movies
+package com.example.goldenequatorassignment.vo.popular
 
-data class SearchMovies(
+data class PopularMovies(
     val adult: Boolean,
-    val backdrop_path: Any,
+    val backdrop_path: String,
     val genre_ids: List<Int>,
     val id: Int,
     val original_language: String,
@@ -13,6 +13,6 @@ data class SearchMovies(
     val release_date: String,
     val title: String,
     val video: Boolean,
-    val vote_average: Float,
-    val vote_count: Float
+    val vote_average: Double,
+    val vote_count: Int
 )

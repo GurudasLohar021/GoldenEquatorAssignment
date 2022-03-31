@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.goldenequatorassignment.R
 import com.example.goldenequatorassignment.adapter.FragmentAdapter
+import com.example.goldenequatorassignment.api.MovieClient
 import com.example.goldenequatorassignment.ui.favorite_page.FavoriteMovieActivity
 import com.example.goldenequatorassignment.ui.home_page.NowPlayingFragment
 import com.example.goldenequatorassignment.ui.home_page.TopRatedFragment
@@ -35,12 +36,18 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = fragmentAdapter
         tabLayout.setupWithViewPager(viewPager)
 
+        getGenre()
 
     }
+
+    private fun getGenre(){
+        val  genres = MovieClient.getClient().getGenre()
+
+    }
+
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-
         menuInflater.inflate(R.menu.action_bar_menu, menu)
-
         return true
     }
 

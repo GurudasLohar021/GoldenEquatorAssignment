@@ -1,6 +1,6 @@
-package com.example.goldenequatorassignment.vm.popular
+package com.example.goldenequatorassignment.vo.upcoming
 
-data class PopularMovies(
+data class UpcomingMovies(
     val adult: Boolean,
     val backdrop_path: String,
     val genre_ids: List<Int>,

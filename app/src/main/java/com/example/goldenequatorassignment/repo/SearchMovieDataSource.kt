@@ -1,13 +1,12 @@
 package com.example.goldenequatorassignment.repo
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.example.goldenequatorassignment.api.FIRST_PAGE
 import com.example.goldenequatorassignment.api.MovieInterface
-import com.example.goldenequatorassignment.vm.now_playing.NowPlayingMovies
-import com.example.goldenequatorassignment.vm.search_movies.SearchMovies
+import com.example.goldenequatorassignment.vo.now_playing.NowPlayingMovies
+import com.example.goldenequatorassignment.vo.search_movies.SearchMovies
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.lang.Exception
@@ -17,7 +16,6 @@ class SearchMovieDataSource
     : PageKeyedDataSource<Int, SearchMovies>(){
 
     var page = FIRST_PAGE
-    //var query = "red"
     val connectionState : MutableLiveData<ConnectionState> = MutableLiveData()
 
     override fun loadInitial(

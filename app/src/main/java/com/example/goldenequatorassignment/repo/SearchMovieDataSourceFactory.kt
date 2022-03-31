@@ -3,8 +3,7 @@ package com.example.goldenequatorassignment.repo
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import com.example.goldenequatorassignment.api.MovieInterface
-import com.example.goldenequatorassignment.vm.now_playing.NowPlayingMovies
-import com.example.goldenequatorassignment.vm.search_movies.SearchMovies
+import com.example.goldenequatorassignment.vo.search_movies.SearchMovies
 import io.reactivex.disposables.CompositeDisposable
 
 class SearchMovieDataSourceFactory

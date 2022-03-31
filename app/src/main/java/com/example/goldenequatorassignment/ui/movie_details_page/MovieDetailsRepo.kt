@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import com.example.goldenequatorassignment.api.MovieInterface
 import com.example.goldenequatorassignment.repo.ConnectionState
 import com.example.goldenequatorassignment.repo.MovieDetailsDataSource
-import com.example.goldenequatorassignment.vm.favorite_movies.FavoriteMovieDao
-import com.example.goldenequatorassignment.vm.favorite_movies.FavoriteMovieDetails
-import com.example.goldenequatorassignment.vm.movie_details.MovieDetails
+import com.example.goldenequatorassignment.vo.favorite_movies.FavoriteMovieDao
+import com.example.goldenequatorassignment.vo.favorite_movies.FavoriteMovieDetails
+import com.example.goldenequatorassignment.vo.movie_details.MovieDetails
 import io.reactivex.disposables.CompositeDisposable
 
 class MovieDetailsRepo(private val apiService : MovieInterface) {

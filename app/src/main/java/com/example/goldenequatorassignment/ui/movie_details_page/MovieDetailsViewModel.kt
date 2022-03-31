@@ -3,9 +3,8 @@ package com.example.goldenequatorassignment.ui.movie_details_page
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.goldenequatorassignment.repo.ConnectionState
-import com.example.goldenequatorassignment.vm.favorite_movies.FavoriteMovieRepo
-import com.example.goldenequatorassignment.vm.favorite_movies.FavoriteMovieDetails
-import com.example.goldenequatorassignment.vm.movie_details.MovieDetails
+import com.example.goldenequatorassignment.vo.favorite_movies.FavoriteMovieDetails
+import com.example.goldenequatorassignment.vo.movie_details.MovieDetails
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

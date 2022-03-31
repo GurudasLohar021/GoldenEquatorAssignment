@@ -1,4 +1,4 @@
-package com.example.goldenequatorassignment.vm.popular
+package com.example.goldenequatorassignment.vo.popular
 
 data class PopularMoviesResponse(
     val page: Int,

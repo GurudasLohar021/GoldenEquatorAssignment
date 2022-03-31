@@ -2,7 +2,7 @@ package com.example.goldenequatorassignment.api
 
 import android.content.Context
 import androidx.room.Room
-import com.example.goldenequatorassignment.vm.favorite_movies.FavoriteMovieDatabase
+import com.example.goldenequatorassignment.vo.favorite_movies.FavoriteMovieDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

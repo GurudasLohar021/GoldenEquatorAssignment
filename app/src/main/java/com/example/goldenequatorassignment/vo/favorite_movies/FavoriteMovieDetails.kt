@@ -1,10 +1,8 @@
-package com.example.goldenequatorassignment.vm.favorite_movies
+package com.example.goldenequatorassignment.vo.favorite_movies
 
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.versionedparcelable.ParcelField
-import com.example.goldenequatorassignment.vm.movie_details.Genre
 import java.io.Serializable
 import kotlinx.parcelize.Parcelize
 

@@ -1,4 +1,4 @@
-package com.example.goldenequatorassignment.vm.favorite_movies
+package com.example.goldenequatorassignment.vo.favorite_movies
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.goldenequatorassignment.api.MovieInterface
-import com.example.goldenequatorassignment.vm.movie_details.MovieDetails
+import com.example.goldenequatorassignment.vo.movie_details.MovieDetails
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.lang.Exception

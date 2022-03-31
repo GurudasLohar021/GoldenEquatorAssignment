@@ -1,12 +1,12 @@
 package com.example.goldenequatorassignment.ui.movie_details_page
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -17,12 +17,9 @@ import com.example.goldenequatorassignment.api.IMAGE_BASE_URL
 import com.example.goldenequatorassignment.api.MovieClient
 import com.example.goldenequatorassignment.api.MovieInterface
 import com.example.goldenequatorassignment.repo.ConnectionState
-import com.example.goldenequatorassignment.vm.favorite_movies.FavoriteMovieRepo
-import com.example.goldenequatorassignment.vm.movie_details.MovieDetails
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.example.goldenequatorassignment.vo.movie_details.MovieDetails
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
 class MovieDetailsActivity : AppCompatActivity() {
 
@@ -55,13 +52,17 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     fun bindUI (it: MovieDetails){
-        //val formattedDate = SimpleDateFormat("EE, MMM, dd, yyyy", Locale.US)
-        //val date : String = formattedDate .parse(it.release_date).toString()
+
+        val dateMovie : String = it.release_date
+        val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val outputFormat: DateFormat = SimpleDateFormat("dd/MMM/yyyy")
+        val date = inputFormat.parse(dateMovie)
+        val outputDate = outputFormat.format(date)
 
         findViewById<TextView>(R.id.movieDetails_title).text = it.title
         findViewById<TextView>(R.id.movieDetails_tagline).text = it.tagline
         //findViewById<TextView>(R.id.movieDetails_genre).text = it.genres.toString()
-        findViewById<TextView>(R.id.movieDetails_release_date).text = it.release_date
+        findViewById<TextView>(R.id.movieDetails_release_date).text = outputDate.toString()
         findViewById<TextView>(R.id.movieDetails_vote_average).text = it.vote_average.toString()
         findViewById<TextView>(R.id.movieDetails_vote_count).text = it.vote_count.toString()
         //findViewById<TextView>(R.id.movieDetails_language).text = it.spoken_languages.toString()

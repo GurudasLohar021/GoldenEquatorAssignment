@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import com.example.goldenequatorassignment.repo.ConnectionState
-import com.example.goldenequatorassignment.vm.popular.PopularMovies
+import com.example.goldenequatorassignment.vo.popular.PopularMovies
 import io.reactivex.disposables.CompositeDisposable
 
 class PopularViewModel(private val popularMoviesRepo : PopularMoviesPagedListRepo) : ViewModel() {

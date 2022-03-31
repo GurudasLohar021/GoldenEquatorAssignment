@@ -35,7 +35,7 @@ class NowPlayingFragment : Fragment() {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_now_playing, container, false)
 
-        val apiService : MovieInterface = MovieClient.getClient()
+        val apiService : MovieInterface =    MovieClient.getClient()
 
         nowPlayingMoviesPagedListRepo = NowPlayingMoviesPagedListRepo(apiService)
 
@@ -44,17 +44,6 @@ class NowPlayingFragment : Fragment() {
         val nowPlayingPagedListAdapter = NowPlayingPagedListAdapter(this)
 
         val linearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-
-        /*
-        val  gridLayoutManager = GridLayoutManager(context,3)
-        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup(){
-            override fun getSpanSize(position: Int): Int {
-                val viewType = nowPlayingPagedListAdapter.getItemViewType(position)
-                return if (viewType == nowPlayingPagedListAdapter.NOWPLAYING_VIEW_TYPE) 1
-                else 3
-            }
-        }
-         */
 
         rootView.findViewById<RecyclerView>(R.id.nowPlaying_recyclerView).layoutManager = linearLayoutManager
         rootView.findViewById<RecyclerView>(R.id.nowPlaying_recyclerView).setHasFixedSize(true)

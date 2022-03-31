@@ -1,4 +1,4 @@
-package com.example.goldenequatorassignment.vm.movie_details
+package com.example.goldenequatorassignment.vo.movie_details
 
 data class ProductionCountry(
     val iso_3166_1: String,

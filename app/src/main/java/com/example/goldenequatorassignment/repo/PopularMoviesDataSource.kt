@@ -5,8 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.example.goldenequatorassignment.api.FIRST_PAGE
 import com.example.goldenequatorassignment.api.MovieInterface
-import com.example.goldenequatorassignment.vm.now_playing.NowPlayingMovies
-import com.example.goldenequatorassignment.vm.popular.PopularMovies
+import com.example.goldenequatorassignment.vo.popular.PopularMovies
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 

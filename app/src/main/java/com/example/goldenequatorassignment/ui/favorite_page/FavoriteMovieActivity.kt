@@ -8,11 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goldenequatorassignment.R
-import com.example.goldenequatorassignment.api.AppModuleObject
-import com.example.goldenequatorassignment.ui.search_page.SearchMoviesViewModel
-import com.example.goldenequatorassignment.vm.favorite_movies.FavoriteMovieDao
-import com.example.goldenequatorassignment.vm.favorite_movies.FavoriteMovieDatabase
-import com.example.goldenequatorassignment.vm.favorite_movies.FavoriteMovieRepo
+import com.example.goldenequatorassignment.vo.favorite_movies.FavoriteMovieRepo
 
 class FavoriteMovieActivity : AppCompatActivity() {
 

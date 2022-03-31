@@ -1,7 +1,5 @@
-package com.example.goldenequatorassignment.vm.favorite_movies
+package com.example.goldenequatorassignment.vo.favorite_movies
 
-import com.example.goldenequatorassignment.vm.favorite_movies.FavoriteMovieDao
-import com.example.goldenequatorassignment.vm.favorite_movies.FavoriteMovieDetails
 import javax.inject.Inject
 
 class FavoriteMovieRepo  @Inject constructor(

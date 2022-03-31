@@ -9,7 +9,7 @@ import com.example.goldenequatorassignment.api.POST_PER_PAGE
 import com.example.goldenequatorassignment.repo.ConnectionState
 import com.example.goldenequatorassignment.repo.NowPlayingMovieDataSource
 import com.example.goldenequatorassignment.repo.NowPlayingMovieDataSourceFactory
-import com.example.goldenequatorassignment.vm.now_playing.NowPlayingMovies
+import com.example.goldenequatorassignment.vo.now_playing.NowPlayingMovies
 import io.reactivex.disposables.CompositeDisposable
 
 class NowPlayingMoviesPagedListRepo (private val apiService : MovieInterface) {
