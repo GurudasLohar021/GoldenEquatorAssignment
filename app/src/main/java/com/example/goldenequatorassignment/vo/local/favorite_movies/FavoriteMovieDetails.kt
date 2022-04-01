@@ -1,13 +1,10 @@
-package com.example.goldenequatorassignment.vo.favorite_movies
+package com.example.goldenequatorassignment.vo.local.favorite_movies
 
-import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
-import kotlinx.parcelize.Parcelize
 
 @Entity (tableName = "favorite_movie_details")
-@Parcelize
 data class FavoriteMovieDetails(
     val id_movie: Int,
     val poster_path: String,
@@ -16,8 +13,7 @@ data class FavoriteMovieDetails(
     val vote_count: Int,
     val tagline: String,
     val title: String,
-    ) : Serializable, Parcelable{
+    ) : Serializable {
         @PrimaryKey(autoGenerate = true)
         var id : Int = 0
-        val baseUrl get() = "https://image.tmdb.org/t/p/w500"
     }

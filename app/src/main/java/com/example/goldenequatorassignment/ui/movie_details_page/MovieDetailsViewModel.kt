@@ -3,7 +3,7 @@ package com.example.goldenequatorassignment.ui.movie_details_page
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.goldenequatorassignment.repo.ConnectionState
-import com.example.goldenequatorassignment.vo.favorite_movies.FavoriteMovieDetails
+import com.example.goldenequatorassignment.vo.local.favorite_movies.FavoriteMovieDetails
 import com.example.goldenequatorassignment.vo.movie_details.MovieDetails
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.CoroutineScope
@@ -21,31 +21,6 @@ class MovieDetailsViewModel(private val movieDetailsRepo: MovieDetailsRepo, movi
     val connectionState : LiveData<ConnectionState> by lazy {
         movieDetailsRepo.getMovieDetailsConnectionState()
     }
-
-    fun addFavoriteMovie(movieDetails: MovieDetails){
-        CoroutineScope(Dispatchers.IO).launch {
-            movieDetailsRepo.addToFavorite(
-                FavoriteMovieDetails(
-                    movieDetails.id,
-                    movieDetails.poster_path,
-                    movieDetails.release_date,
-                    movieDetails.vote_average,
-                    movieDetails.vote_count,
-                    movieDetails.tagline,
-                    movieDetails.title,
-                )
-            )
-        }
-    }
-
-    suspend fun checkMovie (id: String) = movieDetailsRepo.checkMovie(id)
-
-    fun removeFromFavoriteMovie (id: String){
-        CoroutineScope(Dispatchers.IO).launch {
-            movieDetailsRepo.removeFromFavorite(id)
-        }
-    }
-
 
     override fun onCleared() {
         super.onCleared()

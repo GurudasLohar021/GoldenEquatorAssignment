@@ -1,11 +1,48 @@
 package com.example.goldenequatorassignment.ui.favorite_page
 
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.goldenequatorassignment.vo.favorite_movies.FavoriteMovieRepo
-
-class FavoriteMovieViewModel @ViewModelInject constructor(
-    private val repository : FavoriteMovieRepo
+import androidx.lifecycle.viewModelScope
+import com.example.goldenequatorassignment.vo.local.favorite_movies.FavoriteMovieDetails
+import com.example.goldenequatorassignment.vo.local.favorite_movies.FavoriteMovieRepo
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+@HiltViewModel
+class FavoriteMovieViewModel @Inject constructor(
+    public val favoriteMovieRepo: FavoriteMovieRepo
 ): ViewModel() {
-    val movies = repository.getFavoriteMovies()
+
+    private val _response = MutableLiveData<Long>()
+    val response: LiveData<Long> = _response
+
+    fun addFavoriteMovieToDB(favoriteMovieDetails: FavoriteMovieDetails){
+        viewModelScope.launch(Dispatchers.IO) {
+            _response.postValue(favoriteMovieRepo.addToFavorite(favoriteMovieDetails))
+        }
+    }
+
+    private val _favoriteDetails = MutableStateFlow<List<FavoriteMovieDetails>>(emptyList())
+    val favoriteDetails : StateFlow<List<FavoriteMovieDetails>> = _favoriteDetails
+
+    fun getFavoriteMovieDB(){
+        viewModelScope.launch(Dispatchers.IO){
+            favoriteMovieRepo.getFavorite()
+
+        }
+    }
+
+    fun removeFavoriteMovieDB(id : Int){
+        viewModelScope.launch(Dispatchers.IO){
+            favoriteMovieRepo.removeFromFavorite(id)
+        }
+    }
+
 }

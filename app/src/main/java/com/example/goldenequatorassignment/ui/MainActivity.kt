@@ -36,17 +36,11 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = fragmentAdapter
         tabLayout.setupWithViewPager(viewPager)
 
-        getGenre()
-
-    }
-
-    private fun getGenre(){
-        val  genres = MovieClient.getClient().getGenre()
-
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.action_bar_menu, menu)
         return true
     }

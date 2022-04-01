@@ -30,6 +30,7 @@ class SearchMovieActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seach_movie)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
 
         var querySearch : String = "dune"
@@ -85,6 +86,12 @@ class SearchMovieActivity : AppCompatActivity() {
                 return SearchMoviesViewModel(searchMoviesRepo, query) as T
             }
         })[SearchMoviesViewModel::class.java]
+    }
+
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 
 }
