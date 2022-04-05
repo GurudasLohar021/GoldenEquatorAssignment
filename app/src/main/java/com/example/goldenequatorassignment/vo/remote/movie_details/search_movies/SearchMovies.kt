@@ -1,8 +1,8 @@
-package com.example.goldenequatorassignment.vo.upcoming
+package com.example.goldenequatorassignment.vo.remote.movie_details.search_movies
 
-data class UpcomingMovies(
+data class SearchMovies(
     val adult: Boolean,
-    val backdrop_path: String,
+    val backdrop_path: Any,
     val genre_ids: List<Int>,
     val id: Int,
     val original_language: String,
@@ -13,6 +13,6 @@ data class UpcomingMovies(
     val release_date: String,
     val title: String,
     val video: Boolean,
-    val vote_average: Double,
-    val vote_count: Int
+    val vote_average: Float,
+    val vote_count: Float
 )

@@ -1,4 +1,4 @@
-package com.example.goldenequatorassignment.vo.top_rated
+package com.example.goldenequatorassignment.vo.remote.movie_details.top_rated
 
 data class TopRatedMoviesResponse(
     val page: Int,

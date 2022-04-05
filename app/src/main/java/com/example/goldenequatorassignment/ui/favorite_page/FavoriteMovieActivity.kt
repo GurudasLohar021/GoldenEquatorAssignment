@@ -7,12 +7,11 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goldenequatorassignment.R
-import com.example.goldenequatorassignment.vo.local.favorite_movies.FavoriteMovieDatabase
-import com.example.goldenequatorassignment.vo.local.favorite_movies.FavoriteMovieDetails
+import com.example.goldenequatorassignment.vo.local.favorite_movie.FavoriteMovieDatabase
+import com.example.goldenequatorassignment.vo.local.favorite_movie.FavoriteMovieDetails
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class FavoriteMovieActivity : AppCompatActivity() {

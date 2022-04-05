@@ -1,13 +1,15 @@
 package com.example.goldenequatorassignment.api
 
-import com.example.goldenequatorassignment.vo.movie_details.Genre
-import com.example.goldenequatorassignment.vo.movie_details.MovieDetails
-import com.example.goldenequatorassignment.vo.now_playing.NowPlayingMoviesResponse
-import com.example.goldenequatorassignment.vo.popular.PopularMoviesResponse
-import com.example.goldenequatorassignment.vo.search_movies.SearchMoviesResponse
-import com.example.goldenequatorassignment.vo.top_rated.TopRatedMoviesResponse
-import com.example.goldenequatorassignment.vo.upcoming.UpcomingMoviesResponse
+import com.example.goldenequatorassignment.vo.local.genres.Genre
+import com.example.goldenequatorassignment.vo.local.genres.GenresObjectResponse
+import com.example.goldenequatorassignment.vo.remote.movie_details.MovieDetails
+import com.example.goldenequatorassignment.vo.remote.movie_details.now_playing.NowPlayingMoviesResponse
+import com.example.goldenequatorassignment.vo.remote.movie_details.popular.PopularMoviesResponse
+import com.example.goldenequatorassignment.vo.remote.movie_details.search_movies.SearchMoviesResponse
+import com.example.goldenequatorassignment.vo.remote.movie_details.top_rated.TopRatedMoviesResponse
+import com.example.goldenequatorassignment.vo.remote.movie_details.upcoming.UpcomingMoviesResponse
 import io.reactivex.Single
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -33,6 +35,6 @@ interface MovieInterface {
     fun getSearchMovie(@Query("query") query : String, @Query("page") page : Int) : Single<SearchMoviesResponse>
 
     @GET("genre/movie/list")
-    fun getGenre() : Single<Genre>
+    fun getGenre() : Single<GenresObjectResponse>
 
 }

@@ -22,13 +22,14 @@ class NowPlayingMovieDataSource
     ) {
         connectionState.postValue(ConnectionState.LOADING)
 
+
         compositeDisposable.add(
             apiService.getNowPlayingMovie(page)
                 .subscribeOn(Schedulers.io())
                 .subscribe(
                     {
-                      callback.onResult(it.results, null, page+1)
-                      connectionState.postValue(ConnectionState.COMPLETED)
+                        callback.onResult(it.results, null, page+1)
+                        connectionState.postValue(ConnectionState.COMPLETED)
                     },
                     {
                         connectionState.postValue(ConnectionState.ERROR)
@@ -43,7 +44,7 @@ class NowPlayingMovieDataSource
         params: LoadParams<Int>,
         callback: LoadCallback<Int, NowPlayingMovies>
     ) {
-        TODO("Not yet implemented")
+
     }
 
     override fun loadAfter(

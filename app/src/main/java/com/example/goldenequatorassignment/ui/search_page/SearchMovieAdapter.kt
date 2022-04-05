@@ -14,7 +14,7 @@ import com.example.goldenequatorassignment.R
 import com.example.goldenequatorassignment.api.IMAGE_BASE_URL
 import com.example.goldenequatorassignment.repo.ConnectionState
 import com.example.goldenequatorassignment.ui.movie_details_page.MovieDetailsActivity
-import com.example.goldenequatorassignment.vo.search_movies.SearchMovies
+import com.example.goldenequatorassignment.vo.remote.movie_details.search_movies.SearchMovies
 
 class SearchMovieAdapter(public var context:SearchMovieActivity)
     : PagedListAdapter<SearchMovies, RecyclerView.ViewHolder>(SearchMovieDiffCallback()) {

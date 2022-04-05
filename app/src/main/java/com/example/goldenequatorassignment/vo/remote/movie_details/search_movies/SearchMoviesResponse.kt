@@ -1,4 +1,4 @@
-package com.example.goldenequatorassignment.vo.search_movies
+package com.example.goldenequatorassignment.vo.remote.movie_details.search_movies
 
 data class SearchMoviesResponse(
     val page: Int,

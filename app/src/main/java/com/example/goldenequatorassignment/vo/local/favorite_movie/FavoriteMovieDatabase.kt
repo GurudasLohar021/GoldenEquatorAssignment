@@ -1,15 +1,9 @@
-package com.example.goldenequatorassignment.vo.local.favorite_movies
+package com.example.goldenequatorassignment.vo.local.favorite_movie
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-import javax.inject.Inject
-import javax.inject.Provider
 
 @Database(
     entities = [FavoriteMovieDetails::class],
@@ -22,8 +16,8 @@ abstract class FavoriteMovieDatabase : RoomDatabase(){
 
 
     companion object{
-        var INSTANCE:FavoriteMovieDatabase?=null
-        fun getInstance(context: Context):FavoriteMovieDatabase
+        var INSTANCE: FavoriteMovieDatabase?=null
+        fun getInstance(context: Context): FavoriteMovieDatabase
         {
             if (INSTANCE == null){
 

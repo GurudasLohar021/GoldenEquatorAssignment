@@ -1,9 +1,12 @@
-package com.example.goldenequatorassignment.vo.now_playing
+package com.example.goldenequatorassignment.vo.remote.movie_details.popular
 
-data class NowPlayingMovies(
+import com.example.goldenequatorassignment.vo.local.genres.Genre
+
+data class PopularMovies(
     val adult: Boolean,
     val backdrop_path: String,
     val genre_ids: List<Int>,
+    var genreArrayList: ArrayList<Genre>,
     val id: Int,
     val original_language: String,
     val original_title: String,

@@ -1,4 +1,4 @@
-package com.example.goldenequatorassignment.vo.local.favorite_movies
+package com.example.goldenequatorassignment.vo.local.favorite_movie
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

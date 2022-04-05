@@ -8,7 +8,7 @@ import com.example.goldenequatorassignment.api.MovieInterface
 import com.example.goldenequatorassignment.api.POST_PER_PAGE
 import com.example.goldenequatorassignment.repo.*
 
-import com.example.goldenequatorassignment.vo.popular.PopularMovies
+import com.example.goldenequatorassignment.vo.remote.movie_details.popular.PopularMovies
 import io.reactivex.disposables.CompositeDisposable
 
 class PopularMoviesPagedListRepo (private val apiService : MovieInterface)  {

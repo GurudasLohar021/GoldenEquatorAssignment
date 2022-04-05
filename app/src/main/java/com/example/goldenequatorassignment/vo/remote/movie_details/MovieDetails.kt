@@ -1,4 +1,4 @@
-package com.example.goldenequatorassignment.vo.movie_details
+package com.example.goldenequatorassignment.vo.remote.movie_details
 
 data class MovieDetails(
     val adult: Boolean,

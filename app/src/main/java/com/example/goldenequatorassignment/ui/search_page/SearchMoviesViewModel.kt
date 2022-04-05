@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import com.example.goldenequatorassignment.repo.ConnectionState
-import com.example.goldenequatorassignment.vo.search_movies.SearchMovies
+import com.example.goldenequatorassignment.vo.remote.movie_details.search_movies.SearchMovies
 import io.reactivex.disposables.CompositeDisposable
 
 class SearchMoviesViewModel(private val searchMoviesRepo: SearchMoviesRepo, query: String): ViewModel() {

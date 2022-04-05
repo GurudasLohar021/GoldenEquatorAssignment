@@ -1,4 +1,6 @@
-package com.example.goldenequatorassignment.vo.now_playing
+package com.example.goldenequatorassignment.vo.remote.movie_details.now_playing
+
+import com.example.goldenequatorassignment.vo.now_playing.NowPlayingMovies
 
 data class NowPlayingMoviesResponse(
     val dates: Dates,

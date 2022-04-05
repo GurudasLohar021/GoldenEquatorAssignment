@@ -1,4 +1,4 @@
-package com.example.goldenequatorassignment.vo.upcoming
+package com.example.goldenequatorassignment.vo.remote.movie_details.upcoming
 
 data class UpcomingMoviesResponse(
     val dates: Dates,

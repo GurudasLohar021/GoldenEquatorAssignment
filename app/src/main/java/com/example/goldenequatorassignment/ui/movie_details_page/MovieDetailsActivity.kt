@@ -21,9 +21,9 @@ import com.example.goldenequatorassignment.api.MovieClient
 import com.example.goldenequatorassignment.api.MovieInterface
 import com.example.goldenequatorassignment.repo.ConnectionState
 import com.example.goldenequatorassignment.ui.favorite_page.FavoriteMovieViewModel
-import com.example.goldenequatorassignment.vo.local.favorite_movies.FavoriteMovieDatabase
-import com.example.goldenequatorassignment.vo.local.favorite_movies.FavoriteMovieDetails
-import com.example.goldenequatorassignment.vo.movie_details.MovieDetails
+import com.example.goldenequatorassignment.vo.local.favorite_movie.FavoriteMovieDatabase
+import com.example.goldenequatorassignment.vo.local.favorite_movie.FavoriteMovieDetails
+import com.example.goldenequatorassignment.vo.remote.movie_details.MovieDetails
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

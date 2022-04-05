@@ -1,18 +1,15 @@
 package com.example.goldenequatorassignment.ui.favorite_page
 
-import android.util.Log
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.goldenequatorassignment.vo.local.favorite_movies.FavoriteMovieDetails
-import com.example.goldenequatorassignment.vo.local.favorite_movies.FavoriteMovieRepo
+import com.example.goldenequatorassignment.vo.local.favorite_movie.FavoriteMovieDetails
+import com.example.goldenequatorassignment.vo.local.favorite_movie.FavoriteMovieRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel

@@ -1,31 +1,39 @@
 package com.example.goldenequatorassignment.ui
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
 import androidx.viewpager.widget.ViewPager
 import com.example.goldenequatorassignment.R
 import com.example.goldenequatorassignment.adapter.FragmentAdapter
 import com.example.goldenequatorassignment.api.MovieClient
+import com.example.goldenequatorassignment.repo.ConnectionState
 import com.example.goldenequatorassignment.ui.favorite_page.FavoriteMovieActivity
 import com.example.goldenequatorassignment.ui.home_page.NowPlayingFragment
 import com.example.goldenequatorassignment.ui.home_page.TopRatedFragment
 import com.example.goldenequatorassignment.ui.home_page.UpcomingFragment
 import com.example.goldenequatorassignment.ui.home_page.popular.PopularFragment
 import com.example.goldenequatorassignment.ui.search_page.SearchMovieActivity
+import com.example.goldenequatorassignment.vo.local.genres.Genre
 import com.google.android.material.tabs.TabLayout
-
+import io.reactivex.schedulers.Schedulers
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Retrofit
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var viewPager = findViewById<ViewPager>(R.id.viewPager)
-        var tabLayout = findViewById<TabLayout>(R.id.tabLayout)
+        val viewPager = findViewById<ViewPager>(R.id.viewPager)
+        val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
 
         val fragmentAdapter = FragmentAdapter(supportFragmentManager)
         fragmentAdapter.addFragment(NowPlayingFragment(),"Now Playing")
@@ -36,7 +44,30 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = fragmentAdapter
         tabLayout.setupWithViewPager(viewPager)
 
+        MyGenreClass.getGenres()
     }
+
+
+    class MyGenreClass{
+        companion object GenreList{
+            @SuppressLint("CheckResult")
+            fun getGenres() {
+                MovieClient.getClient().getGenre()
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(
+                        {
+                            val genreData = it.genres
+                            //Log.i("!!!!!!@@@@@@@!!!!!!!!!",genreData.toString())
+                        },
+                        {
+                            Log.e("GenreDataSource", it.message.toString())
+                        }
+                    )
+            }
+
+        }
+    }
+
 
 
 

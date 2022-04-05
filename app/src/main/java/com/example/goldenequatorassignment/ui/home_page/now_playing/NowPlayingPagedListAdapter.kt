@@ -1,6 +1,8 @@
 package com.example.goldenequatorassignment.ui.home_page.now_playing
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +14,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.goldenequatorassignment.R
 import com.example.goldenequatorassignment.api.IMAGE_BASE_URL
+import com.example.goldenequatorassignment.api.MovieClient
 import com.example.goldenequatorassignment.repo.ConnectionState
+import com.example.goldenequatorassignment.repo.NowPlayingMovieDataSource
+import com.example.goldenequatorassignment.repo.NowPlayingMovieDataSourceFactory
+import com.example.goldenequatorassignment.ui.MainActivity
 import com.example.goldenequatorassignment.ui.home_page.NowPlayingFragment
 import com.example.goldenequatorassignment.ui.movie_details_page.MovieDetailsActivity
+import com.example.goldenequatorassignment.vo.local.genres.Genre
 import com.example.goldenequatorassignment.vo.now_playing.NowPlayingMovies
+import io.reactivex.schedulers.Schedulers
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
@@ -86,6 +94,7 @@ class NowPlayingPagedListAdapter(public var context: NowPlayingFragment)
 
     inner class NowPlayingItemViewHolder (view: View) : RecyclerView.ViewHolder(view){
 
+        @SuppressLint("CheckResult")
         fun bind(nowPlayingMovies: NowPlayingMovies?, context: NowPlayingFragment){
 
             val dateMovie : String = nowPlayingMovies?.release_date.toString()
@@ -94,8 +103,40 @@ class NowPlayingPagedListAdapter(public var context: NowPlayingFragment)
             val date = inputFormat.parse(dateMovie)
             val outputDate = outputFormat.format(date)
 
+
+            MovieClient.getClient().getGenre()
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                    {
+                        val genreFromAPI = it.genres
+                        println("!!!!!!@@@@########$$$$$$$$")
+                        println(genreFromAPI)
+
+                        val genresList: List<Int>? = nowPlayingMovies?.genre_ids
+                        println("!!!!!!@@@@########$$$$$$$$")
+                        println(genresList)
+
+                        nowPlayingMovies?.genreArrayList = ArrayList()
+
+                        if (genresList != null) {
+                            for(i in genresList){
+                                val indexGenre = genreFromAPI.indexOfFirst { genre -> genre.id == i}
+                                if (indexGenre != -1){
+                                    nowPlayingMovies.genreArrayList.add(genreFromAPI[indexGenre])
+                                }
+                            }
+                        }
+                    },
+                    {
+                        Log.e("GenreDataSource", it.message.toString())
+                    }
+                )
+
             itemView.findViewById<TextView>(R.id.movie_title).text = nowPlayingMovies?.title
-            //itemView.findViewById<TextView>(R.id.movie_genre).text = nowPlayingMovies?.genre_ids.toString()
+            itemView.findViewById<TextView>(R.id.movie_genre).text =
+                nowPlayingMovies?.genreArrayList?.joinToString(
+                    separator = " | ",
+                ) { genre: Genre -> genre.name }
             itemView.findViewById<TextView>(R.id.movie_release_date).text = outputDate.toString()
             itemView.findViewById<TextView>(R.id.movie_vote_average).text = nowPlayingMovies?.vote_average.toString()
             itemView.findViewById<TextView>(R.id.movie_vote_count).text = nowPlayingMovies?.vote_count.toString()
@@ -153,4 +194,5 @@ class NowPlayingPagedListAdapter(public var context: NowPlayingFragment)
         }
 
     }
+
 }

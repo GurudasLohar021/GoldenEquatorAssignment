@@ -2,7 +2,7 @@ package com.example.goldenequatorassignment.api
 
 import android.content.Context
 import androidx.room.Room
-import com.example.goldenequatorassignment.vo.local.favorite_movies.FavoriteMovieDatabase
+import com.example.goldenequatorassignment.vo.local.favorite_movie.FavoriteMovieDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,7 +26,7 @@ object AppModuleObject {
 
     @Provides
     @Singleton
-    fun provideFavoriteDao(db:FavoriteMovieDatabase) = db.getFavoriteMovieDao()
+    fun provideFavoriteDao(db: FavoriteMovieDatabase) = db.getFavoriteMovieDao()
 
 
 }

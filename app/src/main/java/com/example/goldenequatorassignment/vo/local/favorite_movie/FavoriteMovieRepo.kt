@@ -1,7 +1,5 @@
-package com.example.goldenequatorassignment.vo.local.favorite_movies
+package com.example.goldenequatorassignment.vo.local.favorite_movie
 
-import androidx.lifecycle.LiveData
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class FavoriteMovieRepo  @Inject constructor(
