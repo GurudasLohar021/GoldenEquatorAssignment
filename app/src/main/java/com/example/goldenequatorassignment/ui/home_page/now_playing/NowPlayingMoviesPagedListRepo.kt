@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.example.goldenequatorassignment.api.MovieInterface
-import com.example.goldenequatorassignment.api.POST_PER_PAGE
+import com.example.goldenequatorassignment.source.api.MovieInterface
 import com.example.goldenequatorassignment.repo.ConnectionState
-import com.example.goldenequatorassignment.repo.NowPlayingMovieDataSource
+import com.example.goldenequatorassignment.bloc.NowPlayingMovieDataSource
 import com.example.goldenequatorassignment.repo.NowPlayingMovieDataSourceFactory
-import com.example.goldenequatorassignment.vo.now_playing.NowPlayingMovies
+import com.example.goldenequatorassignment.model.now_playing.NowPlayingMovies
+import com.example.goldenequatorassignment.rest.POST_PER_PAGE
 
 import io.reactivex.disposables.CompositeDisposable
 

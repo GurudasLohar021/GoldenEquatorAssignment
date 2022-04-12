@@ -14,12 +14,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goldenequatorassignment.R
-import com.example.goldenequatorassignment.api.MovieClient
-import com.example.goldenequatorassignment.api.MovieInterface
+import com.example.goldenequatorassignment.source.api.MovieInterface
 import com.example.goldenequatorassignment.repo.ConnectionState
-import com.example.goldenequatorassignment.ui.home_page.now_playing.NowPlayingMoviesPagedListRepo
-import com.example.goldenequatorassignment.ui.home_page.now_playing.NowPlayingPagedListAdapter
-import com.example.goldenequatorassignment.ui.home_page.now_playing.NowPlayingViewModel
+import com.example.goldenequatorassignment.rest.MovieClient
 
 class PopularFragment : Fragment() {
 

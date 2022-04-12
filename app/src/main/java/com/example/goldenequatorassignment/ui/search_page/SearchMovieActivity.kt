@@ -3,23 +3,23 @@ package com.example.goldenequatorassignment.ui.search_page
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.SearchView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Query
 import com.example.goldenequatorassignment.R
-import com.example.goldenequatorassignment.api.MovieClient
-import com.example.goldenequatorassignment.api.MovieInterface
+import com.example.goldenequatorassignment.bloc.SearchMovieDataSource
+import com.example.goldenequatorassignment.source.api.MovieInterface
 import com.example.goldenequatorassignment.repo.ConnectionState
-import com.example.goldenequatorassignment.ui.movie_details_page.MovieDetailsViewModel
+import com.example.goldenequatorassignment.repo.SearchMovieDataSourceFactory
+import com.example.goldenequatorassignment.rest.MovieClient
 
 class SearchMovieActivity : AppCompatActivity() {
 
@@ -32,10 +32,9 @@ class SearchMovieActivity : AppCompatActivity() {
         setContentView(R.layout.activity_seach_movie)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
+        var querySearch : String = "Red";
 
-        var querySearch : String = "dune"
-
-        var searchView = findViewById<SearchView>(R.id.searchView)
+        val searchView = findViewById<SearchView>(R.id.searchView)
 
         val searchMovieAdapter = SearchMovieAdapter(this)
 
@@ -47,17 +46,20 @@ class SearchMovieActivity : AppCompatActivity() {
 
             override fun onQueryTextSubmit(query: String): Boolean {
                 querySearch = query
+                Log.i("query", query)
                 return true
             }
             override fun onQueryTextChange(newText: String): Boolean {
                querySearch = newText
+                Log.i("newText", newText)
+
                 return true
             }
         })
 
-        searchMoviesRepo = SearchMoviesRepo(apiService,querySearch)
 
-        viewModel = getViewModel(querySearch)
+        searchMoviesRepo = SearchMoviesRepo(apiService,querySearch)
+        viewModel = getViewModel()
 
         findViewById<RecyclerView>(R.id.search_recyclerView).layoutManager = linearLayoutManager
         findViewById<RecyclerView>(R.id.search_recyclerView).setHasFixedSize(true)
@@ -80,10 +82,10 @@ class SearchMovieActivity : AppCompatActivity() {
 
     }
 
-    private fun getViewModel(query: String) : SearchMoviesViewModel{
+    private fun getViewModel() : SearchMoviesViewModel{
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory{
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return SearchMoviesViewModel(searchMoviesRepo, query) as T
+                return SearchMoviesViewModel(searchMoviesRepo) as T
             }
         })[SearchMoviesViewModel::class.java]
     }

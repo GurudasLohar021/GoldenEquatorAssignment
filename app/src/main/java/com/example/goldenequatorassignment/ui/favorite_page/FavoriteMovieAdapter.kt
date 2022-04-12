@@ -9,9 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.goldenequatorassignment.R
-import com.example.goldenequatorassignment.api.IMAGE_BASE_URL
 import com.example.goldenequatorassignment.ui.movie_details_page.MovieDetailsActivity
-import com.example.goldenequatorassignment.vo.local.favorite_movie.FavoriteMovieDetails
+import com.example.goldenequatorassignment.model.local.favorite_movie.FavoriteMovieDetails
+import com.example.goldenequatorassignment.rest.IMAGE_BASE_URL
 
 class FavoriteMovieAdapter(private val listFavorite: List<FavoriteMovieDetails>, private val context: FavoriteMovieActivity) : RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteMovieViewHolder>() {
 

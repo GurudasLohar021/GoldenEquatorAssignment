@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import com.example.goldenequatorassignment.repo.ConnectionState
-import com.example.goldenequatorassignment.vo.now_playing.NowPlayingMovies
+import com.example.goldenequatorassignment.model.now_playing.NowPlayingMovies
 
 import io.reactivex.disposables.CompositeDisposable
 

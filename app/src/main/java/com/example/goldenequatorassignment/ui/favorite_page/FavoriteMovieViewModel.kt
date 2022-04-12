@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.goldenequatorassignment.vo.local.favorite_movie.FavoriteMovieDetails
-import com.example.goldenequatorassignment.vo.local.favorite_movie.FavoriteMovieRepo
+import com.example.goldenequatorassignment.model.local.favorite_movie.FavoriteMovieDetails
+import com.example.goldenequatorassignment.model.local.favorite_movie.FavoriteMovieRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

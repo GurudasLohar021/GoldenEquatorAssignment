@@ -13,16 +13,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.goldenequatorassignment.R
-import com.example.goldenequatorassignment.api.IMAGE_BASE_URL
-import com.example.goldenequatorassignment.api.MovieClient
 import com.example.goldenequatorassignment.repo.ConnectionState
-import com.example.goldenequatorassignment.repo.NowPlayingMovieDataSource
-import com.example.goldenequatorassignment.repo.NowPlayingMovieDataSourceFactory
-import com.example.goldenequatorassignment.ui.MainActivity
 import com.example.goldenequatorassignment.ui.home_page.NowPlayingFragment
 import com.example.goldenequatorassignment.ui.movie_details_page.MovieDetailsActivity
-import com.example.goldenequatorassignment.vo.local.genres.Genre
-import com.example.goldenequatorassignment.vo.now_playing.NowPlayingMovies
+import com.example.goldenequatorassignment.model.local.genres.Genre
+import com.example.goldenequatorassignment.model.now_playing.NowPlayingMovies
+import com.example.goldenequatorassignment.rest.IMAGE_BASE_URL
+import com.example.goldenequatorassignment.rest.MovieClient
 import io.reactivex.schedulers.Schedulers
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -94,7 +91,7 @@ class NowPlayingPagedListAdapter(public var context: NowPlayingFragment)
 
     inner class NowPlayingItemViewHolder (view: View) : RecyclerView.ViewHolder(view){
 
-        @SuppressLint("CheckResult")
+        @SuppressLint("CheckResult", "SimpleDateFormat")
         fun bind(nowPlayingMovies: NowPlayingMovies?, context: NowPlayingFragment){
 
             val dateMovie : String = nowPlayingMovies?.release_date.toString()

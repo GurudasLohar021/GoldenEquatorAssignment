@@ -13,17 +13,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.goldenequatorassignment.R
-import com.example.goldenequatorassignment.api.IMAGE_BASE_URL
-import com.example.goldenequatorassignment.api.MovieClient
 import com.example.goldenequatorassignment.repo.ConnectionState
 import com.example.goldenequatorassignment.ui.movie_details_page.MovieDetailsActivity
-import com.example.goldenequatorassignment.vo.local.genres.Genre
-import com.example.goldenequatorassignment.vo.remote.movie_details.popular.PopularMovies
+import com.example.goldenequatorassignment.model.local.genres.Genre
+import com.example.goldenequatorassignment.model.remote.popular.PopularMovies
+import com.example.goldenequatorassignment.rest.IMAGE_BASE_URL
+import com.example.goldenequatorassignment.rest.MovieClient
 import io.reactivex.schedulers.Schedulers
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
-class PopularPagedListAdapter(public var context: PopularFragment)
+class PopularPagedListAdapter( var context: PopularFragment)
     : PagedListAdapter<PopularMovies, RecyclerView.ViewHolder>(PopularPagedListAdapter.PopularMovieDiffCallback()){
 
     val POPULAR_VIEW_TYPE = 1
@@ -88,7 +88,7 @@ class PopularPagedListAdapter(public var context: PopularFragment)
 
     inner class PopularItemViewHolder (view: View) : RecyclerView.ViewHolder(view){
 
-        @SuppressLint("CheckResult")
+        @SuppressLint("CheckResult", "SimpleDateFormat")
         fun bind(popularMovies: PopularMovies?, context: PopularFragment){
 
             val dateMovie : String = popularMovies?.release_date.toString()

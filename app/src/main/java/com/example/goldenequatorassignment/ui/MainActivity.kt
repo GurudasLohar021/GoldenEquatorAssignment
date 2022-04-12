@@ -8,24 +8,17 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
 import androidx.viewpager.widget.ViewPager
 import com.example.goldenequatorassignment.R
-import com.example.goldenequatorassignment.adapter.FragmentAdapter
-import com.example.goldenequatorassignment.api.MovieClient
-import com.example.goldenequatorassignment.repo.ConnectionState
+import com.example.goldenequatorassignment.rest.MovieClient
 import com.example.goldenequatorassignment.ui.favorite_page.FavoriteMovieActivity
 import com.example.goldenequatorassignment.ui.home_page.NowPlayingFragment
 import com.example.goldenequatorassignment.ui.home_page.TopRatedFragment
 import com.example.goldenequatorassignment.ui.home_page.UpcomingFragment
 import com.example.goldenequatorassignment.ui.home_page.popular.PopularFragment
 import com.example.goldenequatorassignment.ui.search_page.SearchMovieActivity
-import com.example.goldenequatorassignment.vo.local.genres.Genre
 import com.google.android.material.tabs.TabLayout
 import io.reactivex.schedulers.Schedulers
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Retrofit
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         val viewPager = findViewById<ViewPager>(R.id.viewPager)
         val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
 
-        val fragmentAdapter = FragmentAdapter(supportFragmentManager)
+        val fragmentAdapter = MainActivityFragmentAdapter(supportFragmentManager)
         fragmentAdapter.addFragment(NowPlayingFragment(),"Now Playing")
         fragmentAdapter.addFragment(PopularFragment(),"Popular")
         fragmentAdapter.addFragment(TopRatedFragment(),"Top Rated")
