@@ -1,6 +1,7 @@
 package com.example.goldenequatorassignment.ui.movie_details_page
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,7 +9,7 @@ import android.widget.CheckBox
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -16,20 +17,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.goldenequatorassignment.R
-import com.example.goldenequatorassignment.source.api.MovieInterface
-import com.example.goldenequatorassignment.repo.ConnectionState
-import com.example.goldenequatorassignment.ui.favorite_page.FavoriteMovieViewModel
-import com.example.goldenequatorassignment.source.local.FavoriteMovieDatabase
 import com.example.goldenequatorassignment.model.local.favorite_movie.FavoriteMovieDetails
 import com.example.goldenequatorassignment.model.local.genres.Genre
 import com.example.goldenequatorassignment.model.remote.movie_details.MovieDetails
 import com.example.goldenequatorassignment.model.remote.movie_details.SpokenLanguage
+import com.example.goldenequatorassignment.model.sharedPreference.SharedFavoriteMovieDetails
+import com.example.goldenequatorassignment.repo.ConnectionState
+import com.example.goldenequatorassignment.repo.MovieDetailsRepo
 import com.example.goldenequatorassignment.rest.IMAGE_BASE_URL
 import com.example.goldenequatorassignment.rest.MovieClient
+import com.example.goldenequatorassignment.source.api.MovieInterface
+import com.example.goldenequatorassignment.source.sharedPreference.SharedPreferenceData
+import com.example.goldenequatorassignment.viewmodel.MovieDetailsViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
@@ -38,8 +38,9 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MovieDetailsViewModel
     private lateinit var movieDetailsRepo: MovieDetailsRepo
-    private  val favoriteViewModel : FavoriteMovieViewModel by viewModels()
+    private lateinit var sharedPreferenceData: SharedPreferenceData
 
+    @RequiresApi(Build.VERSION_CODES.N)
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,9 +54,13 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         viewModel = getViewModel(movieId)
 
+        sharedPreferenceData = SharedPreferenceData()
+
+       val favoriteMovieArrayList : ArrayList<SharedFavoriteMovieDetails> = SharedPreferenceData().retrieveFavoriteMovie(this)
+
+
         viewModel.movieDetails.observe(this, Observer {
             bindUI(it)
-            Log.i("@@@@@@@@@@@@@@@", it.title)
 
             val favoriteSelected = FavoriteMovieDetails(
                 id_movie = it.id,
@@ -67,25 +72,52 @@ class MovieDetailsActivity : AppCompatActivity() {
                 title = it.title,
             )
 
-            Log.i("$$$$$$$$$$$", favoriteSelected.toString())
 
-            var  isSelected = false
+            val sharedFavoriteMovieDetails = SharedFavoriteMovieDetails(
+                id_movie = it.id,
+                poster_path = it.poster_path,
+                release_date = it.release_date,
+                vote_average = it.vote_average,
+                vote_count = it.vote_count,
+                tagline = it.tagline,
+                title = it.title,
+            )
+
+            var isSelected = false
+
+            Log.i("Favorite List",favoriteMovieArrayList.toString())
+
+            for (i in favoriteMovieArrayList){
+                if (it.id == i.id_movie){
+                    findViewById<CheckBox>(R.id.movieDetails_favorite).isChecked = true
+                    break
+                }
+            }
+
             findViewById<CheckBox>(R.id.movieDetails_favorite).setOnCheckedChangeListener { _, _ ->
+
                 isSelected = !isSelected
 
                 if(isSelected){
-                    GlobalScope.launch (Dispatchers.IO) {
+                    /*GlobalScope.launch (Dispatchers.IO) {
                         FavoriteMovieDatabase.getInstance(this@MovieDetailsActivity).getFavoriteMovieDao().addToFavoriteMovie(favoriteSelected)
                         Log.i("!!!!!!!!!!!!!!!", favoriteSelected.title)
-                    }
-                    Toast.makeText(this, "Added to Favorite List", Toast.LENGTH_LONG).show()
+                    }*/
+
+                            sharedPreferenceData.addFavoriteMovie(this@MovieDetailsActivity,sharedFavoriteMovieDetails)
+
+                            //Toast.makeText(this, "Added to Favorite List", Toast.LENGTH_LONG).show()
+
                 }else{
-                    GlobalScope.launch (Dispatchers.IO) {
+                    /*GlobalScope.launch (Dispatchers.IO) {
                         FavoriteMovieDatabase.getInstance(this@MovieDetailsActivity).getFavoriteMovieDao().removeFromFavorite(favoriteSelected.id_movie)
-                    }
-                    Toast.makeText(this, "Removed from Favorite List", Toast.LENGTH_LONG).show()
+                    }*/
+
+                        sharedPreferenceData.removeFavoriteMovie(this@MovieDetailsActivity, sharedFavoriteMovieDetails)
                 }
+
                 findViewById<CheckBox>(R.id.movieDetails_favorite).isChecked = isSelected
+
             }
         })
 
@@ -134,7 +166,7 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
 
-    private fun getViewModel(movieId: Int) : MovieDetailsViewModel{
+    private fun getViewModel(movieId: Int) : MovieDetailsViewModel {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory{
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return MovieDetailsViewModel(movieDetailsRepo,movieId) as T

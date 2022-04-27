@@ -1,13 +1,12 @@
-package com.example.goldenequatorassignment.ui.home_page.now_playing
+package com.example.goldenequatorassignment.repo
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.example.goldenequatorassignment.source.api.MovieInterface
-import com.example.goldenequatorassignment.repo.ConnectionState
-import com.example.goldenequatorassignment.bloc.NowPlayingMovieDataSource
-import com.example.goldenequatorassignment.repo.NowPlayingMovieDataSourceFactory
+import com.example.goldenequatorassignment.data.NowPlayingMovieDataSource
+import com.example.goldenequatorassignment.data.NowPlayingMovieDataSourceFactory
 import com.example.goldenequatorassignment.model.now_playing.NowPlayingMovies
 import com.example.goldenequatorassignment.rest.POST_PER_PAGE
 
@@ -18,6 +17,7 @@ class NowPlayingMoviesPagedListRepo (private val apiService : MovieInterface) {
 
     lateinit var nowPlayingPagedList : LiveData<PagedList<NowPlayingMovies>>
     lateinit var nowPlayingDataSourceFactory : NowPlayingMovieDataSourceFactory
+
 
     fun  fetchLiveNowPlayingPagedList
                 (compositeDisposable: CompositeDisposable)

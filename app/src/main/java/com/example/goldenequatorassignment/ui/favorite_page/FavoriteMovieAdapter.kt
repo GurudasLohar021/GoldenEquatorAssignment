@@ -1,5 +1,6 @@
 package com.example.goldenequatorassignment.ui.favorite_page
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,8 +13,11 @@ import com.example.goldenequatorassignment.R
 import com.example.goldenequatorassignment.ui.movie_details_page.MovieDetailsActivity
 import com.example.goldenequatorassignment.model.local.favorite_movie.FavoriteMovieDetails
 import com.example.goldenequatorassignment.rest.IMAGE_BASE_URL
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
-class FavoriteMovieAdapter(private val listFavorite: List<FavoriteMovieDetails>, private val context: FavoriteMovieActivity) : RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteMovieViewHolder>() {
+class FavoriteMovieAdapter(private val listFavorite: List<FavoriteMovieDetails>, private val context: FavoriteMovieActivity)
+    : RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteMovieViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteMovieViewHolder {
@@ -31,11 +35,19 @@ class FavoriteMovieAdapter(private val listFavorite: List<FavoriteMovieDetails>,
 
     class FavoriteMovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+        @SuppressLint("SimpleDateFormat")
         fun bind(favoriteMovieDetails: FavoriteMovieDetails, context: FavoriteMovieActivity) {
+
+            val dateMovie : String = favoriteMovieDetails.release_date
+            val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+            val outputFormat: DateFormat = SimpleDateFormat("dd/MMM/yyyy")
+            val date = inputFormat.parse(dateMovie)
+            val outputDate = outputFormat.format(date)
+
             itemView.findViewById<TextView>(R.id.movie_title).text = favoriteMovieDetails.title
             //itemView.findViewById<TextView>(R.id.movie_genre).text = favoriteMovieDetails.genre_ids.toString()
             itemView.findViewById<TextView>(R.id.movie_release_date).text =
-                favoriteMovieDetails.release_date
+                outputDate.toString()
             itemView.findViewById<TextView>(R.id.movie_vote_average).text =
                 favoriteMovieDetails.vote_average.toString()
             itemView.findViewById<TextView>(R.id.movie_vote_count).text =

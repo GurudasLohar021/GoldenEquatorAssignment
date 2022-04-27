@@ -5,9 +5,12 @@ import com.example.goldenequatorassignment.model.remote.movie_details.MovieDetai
 import com.example.goldenequatorassignment.model.remote.now_playing.NowPlayingMoviesResponse
 import com.example.goldenequatorassignment.model.remote.popular.PopularMoviesResponse
 import com.example.goldenequatorassignment.model.remote.search_movies.SearchMoviesResponse
+import com.example.goldenequatorassignment.model.remote.top_rated.TopRatedMovies
 import com.example.goldenequatorassignment.model.remote.top_rated.TopRatedMoviesResponse
+import com.example.goldenequatorassignment.model.remote.upcoming.UpcomingMovies
 import com.example.goldenequatorassignment.model.remote.upcoming.UpcomingMoviesResponse
 import io.reactivex.Single
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

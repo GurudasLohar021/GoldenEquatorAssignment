@@ -1,4 +1,4 @@
-package com.example.goldenequatorassignment.ui.favorite_page
+package com.example.goldenequatorassignment.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

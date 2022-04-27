@@ -1,31 +1,30 @@
-package com.example.goldenequatorassignment.bloc
+package com.example.goldenequatorassignment.data
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.example.goldenequatorassignment.source.api.MovieInterface
-import com.example.goldenequatorassignment.model.now_playing.NowPlayingMovies
+import com.example.goldenequatorassignment.model.remote.popular.PopularMovies
 import com.example.goldenequatorassignment.repo.ConnectionState
 import com.example.goldenequatorassignment.rest.FIRST_PAGE
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class NowPlayingMovieDataSource
+class PopularMoviesDataSource
     (private  val apiService: MovieInterface, private val compositeDisposable: CompositeDisposable)
-                : PageKeyedDataSource<Int, NowPlayingMovies>(){
+    : PageKeyedDataSource<Int, PopularMovies>(){
 
     var page = FIRST_PAGE
     val connectionState : MutableLiveData<ConnectionState> = MutableLiveData()
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
-        callback: LoadInitialCallback<Int, NowPlayingMovies>
+        callback: LoadInitialCallback<Int, PopularMovies>
     ) {
         connectionState.postValue(ConnectionState.LOADING)
 
-
         compositeDisposable.add(
-            apiService.getNowPlayingMovie(page)
+            apiService.getPopularMovie(page)
                 .subscribeOn(Schedulers.io())
                 .subscribe(
                     {
@@ -34,7 +33,7 @@ class NowPlayingMovieDataSource
                     },
                     {
                         connectionState.postValue(ConnectionState.ERROR)
-                        Log.e("NowPlayingDataSource", it.message.toString())
+                        Log.e("PopularDataSource", it.message.toString())
 
                     }
                 )
@@ -43,34 +42,32 @@ class NowPlayingMovieDataSource
 
     override fun loadBefore(
         params: LoadParams<Int>,
-        callback: LoadCallback<Int, NowPlayingMovies>
-    ) {
-
+        callback: LoadCallback<Int, PopularMovies>) {
+        TODO("Not yet implemented")
     }
 
     override fun loadAfter(
         params: LoadParams<Int>,
-        callback: LoadCallback<Int, NowPlayingMovies>
-    ) {
+        callback: LoadCallback<Int, PopularMovies>) {
         connectionState.postValue(ConnectionState.LOADING)
 
         compositeDisposable.add(
-            apiService.getNowPlayingMovie(params.key)
+            apiService.getPopularMovie(params.key)
                 .subscribeOn(Schedulers.io())
                 .subscribe(
                     {
-                     if(it.total_pages >= params.key){
+                        if(it.total_pages >= params.key){
 
-                         callback.onResult(it.results, params.key+1)
-                         connectionState.postValue(ConnectionState.COMPLETED)
+                            callback.onResult(it.results, params.key+1)
+                            connectionState.postValue(ConnectionState.COMPLETED)
 
-                     }else{
-                         connectionState.postValue(ConnectionState.ENDOFLIST)
-                     }
+                        }else{
+                            connectionState.postValue(ConnectionState.ENDOFLIST)
+                        }
                     },
                     {
                         connectionState.postValue(ConnectionState.ERROR)
-                        Log.e("NowPlayingDataSource", it.message.toString())
+                        Log.e("PopularDataSource", it.message.toString())
 
                     }
                 )

@@ -23,7 +23,7 @@ import io.reactivex.schedulers.Schedulers
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
-class PopularPagedListAdapter( var context: PopularFragment)
+class PopularPagedListAdapter( var context: PopularFragment,val genreFromAPI : List<Genre>)
     : PagedListAdapter<PopularMovies, RecyclerView.ViewHolder>(PopularPagedListAdapter.PopularMovieDiffCallback()){
 
     val POPULAR_VIEW_TYPE = 1
@@ -91,25 +91,8 @@ class PopularPagedListAdapter( var context: PopularFragment)
         @SuppressLint("CheckResult", "SimpleDateFormat")
         fun bind(popularMovies: PopularMovies?, context: PopularFragment){
 
-            val dateMovie : String = popularMovies?.release_date.toString()
-            val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-            val outputFormat: DateFormat = SimpleDateFormat("dd/MMM/yyyy")
-            val date = inputFormat.parse(dateMovie)
-            val outputDate = outputFormat.format(date)
-
-
-            MovieClient.getClient().getGenre()
-                .subscribeOn(Schedulers.io())
-                .subscribe(
-                    {
-                        val genreFromAPI = it.genres
-                        println("!!!!!!@@@@########$$$$$$$$")
-                        println(genreFromAPI)
-
+                        val genreFromAPI = genreFromAPI
                         val genresList: List<Int>? = popularMovies?.genre_ids
-                        println("!!!!!!@@@@########$$$$$$$$")
-                        println(genresList)
-
                         popularMovies?.genreArrayList = ArrayList()
 
                         if (genresList != null) {
@@ -120,11 +103,6 @@ class PopularPagedListAdapter( var context: PopularFragment)
                                 }
                             }
                         }
-                    },
-                    {
-                        Log.e("GenreDataSource", it.message.toString())
-                    }
-                )
 
 
             itemView.findViewById<TextView>(R.id.movie_title).text = popularMovies?.title
@@ -132,7 +110,7 @@ class PopularPagedListAdapter( var context: PopularFragment)
                 popularMovies?.genreArrayList?.joinToString(
                     separator = " | ",
                 ) { genre: Genre -> genre.name }
-            itemView.findViewById<TextView>(R.id.movie_release_date).text = outputDate.toString()
+            itemView.findViewById<TextView>(R.id.movie_release_date).text = popularMovies?.release_date
             itemView.findViewById<TextView>(R.id.movie_vote_average).text = popularMovies?.vote_average.toString()
             itemView.findViewById<TextView>(R.id.movie_vote_count).text = popularMovies?.vote_count.toString()
 

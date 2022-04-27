@@ -1,6 +1,7 @@
 package com.example.goldenequatorassignment.ui.favorite_page
 
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -9,16 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.goldenequatorassignment.R
 import com.example.goldenequatorassignment.source.local.FavoriteMovieDatabase
 import com.example.goldenequatorassignment.model.local.favorite_movie.FavoriteMovieDetails
+import com.example.goldenequatorassignment.model.sharedPreference.SharedFavoriteMovieDetails
+import com.google.gson.Gson
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class FavoriteMovieActivity : AppCompatActivity() {
-
-    private val viewModel: FavoriteMovieViewModel by viewModels()
-
-
 
     @OptIn(DelicateCoroutinesApi::class)
     @SuppressLint("CutPasteId")

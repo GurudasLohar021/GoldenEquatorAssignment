@@ -1,10 +1,11 @@
-package com.example.goldenequatorassignment.ui.home_page.popular
+package com.example.goldenequatorassignment.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import com.example.goldenequatorassignment.repo.ConnectionState
 import com.example.goldenequatorassignment.model.remote.popular.PopularMovies
+import com.example.goldenequatorassignment.repo.PopularMoviesPagedListRepo
 import io.reactivex.disposables.CompositeDisposable
 
 class PopularViewModel(private val popularMoviesRepo : PopularMoviesPagedListRepo) : ViewModel() {

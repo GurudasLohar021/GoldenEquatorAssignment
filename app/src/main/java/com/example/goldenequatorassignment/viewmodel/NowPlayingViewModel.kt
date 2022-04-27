@@ -1,10 +1,11 @@
-package com.example.goldenequatorassignment.ui.home_page.now_playing
+package com.example.goldenequatorassignment.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import com.example.goldenequatorassignment.repo.ConnectionState
 import com.example.goldenequatorassignment.model.now_playing.NowPlayingMovies
+import com.example.goldenequatorassignment.repo.NowPlayingMoviesPagedListRepo
 
 import io.reactivex.disposables.CompositeDisposable
 

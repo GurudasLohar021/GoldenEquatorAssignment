@@ -1,9 +1,12 @@
 package com.example.goldenequatorassignment.model.remote.search_movies
 
+import com.example.goldenequatorassignment.model.local.genres.Genre
+
 data class SearchMovies(
     val adult: Boolean,
     val backdrop_path: Any,
     val genre_ids: List<Int>,
+    var genreArrayList: ArrayList<Genre>,
     val id: Int,
     val original_language: String,
     val original_title: String,

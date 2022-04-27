@@ -14,9 +14,13 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goldenequatorassignment.R
+import com.example.goldenequatorassignment.data.GenreListDataSource
+import com.example.goldenequatorassignment.model.local.genres.Genre
 import com.example.goldenequatorassignment.source.api.MovieInterface
 import com.example.goldenequatorassignment.repo.ConnectionState
+import com.example.goldenequatorassignment.repo.PopularMoviesPagedListRepo
 import com.example.goldenequatorassignment.rest.MovieClient
+import com.example.goldenequatorassignment.viewmodel.PopularViewModel
 
 class PopularFragment : Fragment() {
 
@@ -35,9 +39,11 @@ class PopularFragment : Fragment() {
 
         popularMoviesPagedListRepo = PopularMoviesPagedListRepo(apiService)
 
+        val genreFromAPI : List<Genre> = GenreListDataSource(apiService).fetchGenresList()
+
         viewModel = getViewModel()
 
-       val popularPagedListAdapter = PopularPagedListAdapter(this)
+       val popularPagedListAdapter = PopularPagedListAdapter(this,genreFromAPI)
 
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
 
@@ -64,7 +70,7 @@ class PopularFragment : Fragment() {
         return rootView;
     }
 
-    private fun getViewModel() : PopularViewModel{
+    private fun getViewModel() : PopularViewModel {
         return ViewModelProviders.of(this, object: ViewModelProvider.Factory{
 
             override fun <T : ViewModel> create(modelClass: Class<T>): T {

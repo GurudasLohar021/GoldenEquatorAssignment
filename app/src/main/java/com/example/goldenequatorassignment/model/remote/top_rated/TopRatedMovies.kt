@@ -1,9 +1,12 @@
 package com.example.goldenequatorassignment.model.remote.top_rated
 
+import com.example.goldenequatorassignment.model.local.genres.Genre
+
 data class TopRatedMovies(
     val adult: Boolean,
     val backdrop_path: String,
     val genre_ids: List<Int>,
+    var genreArrayList: ArrayList<Genre>,
     val id: Int,
     val original_language: String,
     val original_title: String,

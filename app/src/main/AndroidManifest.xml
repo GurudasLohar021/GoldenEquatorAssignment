@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GoldenEquatorAssignment">
         <activity
+            android:name=".ui.shared_favorite_page.SharedFavoriteMovieActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.favorite_page.FavoriteMovieActivity"
             android:exported="false" />
         <activity

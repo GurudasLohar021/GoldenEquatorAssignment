@@ -1,8 +1,8 @@
-package com.example.goldenequatorassignment.repo
+package com.example.goldenequatorassignment.data
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
-import com.example.goldenequatorassignment.bloc.SearchMovieDataSource
+import com.example.goldenequatorassignment.data.SearchMovieDataSource
 import com.example.goldenequatorassignment.source.api.MovieInterface
 import com.example.goldenequatorassignment.model.remote.search_movies.SearchMovies
 import io.reactivex.disposables.CompositeDisposable

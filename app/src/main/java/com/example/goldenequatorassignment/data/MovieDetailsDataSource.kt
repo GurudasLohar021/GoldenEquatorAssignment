@@ -1,4 +1,4 @@
-package com.example.goldenequatorassignment.bloc
+package com.example.goldenequatorassignment.data
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -43,6 +43,4 @@ class MovieDetailsDataSource
                 Log.e("MovieDetailsDataSource", e.message.toString())
             }
         }
-
-
 }

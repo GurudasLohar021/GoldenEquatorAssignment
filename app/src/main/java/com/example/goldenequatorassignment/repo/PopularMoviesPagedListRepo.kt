@@ -1,10 +1,11 @@
-package com.example.goldenequatorassignment.ui.home_page.popular
+package com.example.goldenequatorassignment.repo
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.example.goldenequatorassignment.bloc.PopularMoviesDataSource
+import com.example.goldenequatorassignment.data.PopularMoviesDataSource
+import com.example.goldenequatorassignment.data.PopularMoviesDataSourceFactory
 import com.example.goldenequatorassignment.source.api.MovieInterface
 import com.example.goldenequatorassignment.repo.*
 
