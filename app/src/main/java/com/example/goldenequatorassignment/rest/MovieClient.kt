@@ -32,6 +32,7 @@ object MovieClient {
                 .url(url)
                 .build()
 
+
             return@Interceptor chain.proceed(request)
         }
 

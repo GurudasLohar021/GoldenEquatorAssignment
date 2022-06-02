@@ -35,14 +35,20 @@ class SharedPreferenceData {
 
     }
 
-    fun removeFavoriteMovie(context: MovieDetailsActivity, sharedFavoriteMovieDetails: SharedFavoriteMovieDetails){
+    fun removeFavoriteMovie(
+        context: MovieDetailsActivity,
+        sharedFavoriteMovieDetails: SharedFavoriteMovieDetails,
+        id: String
+    ){
 
+        //favoriteMovieArrayList.removeAll{ sharedFavoriteMovieDetails.title == id }
         favoriteMovieArrayList.remove(sharedFavoriteMovieDetails)
 
         sharedPreferences = context.getSharedPreferences("Shared Preference",
             AppCompatActivity.MODE_PRIVATE
         )
         editor = sharedPreferences.edit()
+        //sharedPreferences.edit().remove(id).commit()
         val gson = Gson()
         val json : String = gson.toJson(favoriteMovieArrayList)
         editor.putString("SharedFavoriteMovie", json)

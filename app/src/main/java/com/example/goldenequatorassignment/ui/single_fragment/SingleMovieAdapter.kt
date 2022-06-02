@@ -1,4 +1,4 @@
-package com.example.goldenequatorassignment.ui.home_page.top_rated
+package com.example.goldenequatorassignment.ui.single_fragment
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -12,27 +12,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.goldenequatorassignment.R
 import com.example.goldenequatorassignment.model.local.genres.Genre
-import com.example.goldenequatorassignment.model.remote.top_rated.TopRatedMovies
+import com.example.goldenequatorassignment.model.remote.single_model.MovieModel
 import com.example.goldenequatorassignment.state.ConnectionState
 import com.example.goldenequatorassignment.rest.IMAGE_BASE_URL
 import com.example.goldenequatorassignment.ui.movie_details_page.MovieDetailsActivity
-import com.example.goldenequatorassignment.viewmodel.TopRatedViewModel
+import com.example.goldenequatorassignment.viewmodel.SingleMovieViewModel
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
-class TopRatedMoviesAdapter(var context:TopRatedFragment,var viewModel: TopRatedViewModel, val genreFromAPI : List<Genre>)
-    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SingleMovieAdapter(var context: SingleFragment, var viewModel: SingleMovieViewModel, val genreFromAPI : List<Genre>)
+    : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
-    var topRatedMovies = mutableListOf<TopRatedMovies>()
 
-    val TOPRATED_VIEW_TYPE = 1
+    var movieModelList = mutableListOf<MovieModel>()
+
+    val MOVIES_VIEW_TYPE = 1
     val CONNECTION_VIEW_TYPE = 2
 
     private var connectionState: ConnectionState? = null
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setMovieList(topRatedMovies: List<TopRatedMovies>){
-        this.topRatedMovies = topRatedMovies.toMutableList()
+    fun setMovieList(movieModels: List<MovieModel>){
+        this.movieModelList = movieModels.toMutableList()
         notifyDataSetChanged()
     }
 
@@ -44,101 +45,91 @@ class TopRatedMoviesAdapter(var context:TopRatedFragment,var viewModel: TopRated
 
         val view: View
 
-        if (viewType == TOPRATED_VIEW_TYPE){
+        if (viewType == MOVIES_VIEW_TYPE){
             view= layoutInflater.inflate(R.layout.movie_card_layout, parent, false)
-            viewHolder = TopRatedItemViewHolder(view)
+            viewHolder = MovieItemViewHolder(view)
 
         }else{
             view = layoutInflater.inflate(R.layout.connection_status_layout,parent,false)
-            viewHolder =  ConnectionStateItemViewHolder(view)
+            viewHolder = ConnectionStateItemViewHolder(view)
         }
 
         return viewHolder
-
-
-
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int)  {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val movies = movieModelList[position]
 
-        val movies = topRatedMovies[position]
+        if (getItemViewType(position) == MOVIES_VIEW_TYPE){
 
-
-        if (getItemViewType(position) == TOPRATED_VIEW_TYPE){
-
-                if (position == itemCount-1){
-                    viewModel.fetchLiveTopRatedMoviesList()
-                }
-
-            (holder as TopRatedItemViewHolder).bind(movies,context)
+            if (position == itemCount-1){
+                viewModel.fetchLiveMovieTypeList()
+            }
+            (holder as MovieItemViewHolder).bind(movies,context)
         }else{
             (holder as ConnectionStateItemViewHolder).bind(connectionState)
         }
-
-
     }
 
     override fun getItemCount(): Int {
-        return topRatedMovies.size
+        return  movieModelList.size
     }
 
     override fun getItemViewType(position: Int): Int {
         return if(hasExtraRow() && position == itemCount-1){
             CONNECTION_VIEW_TYPE
         }else{
-            TOPRATED_VIEW_TYPE
+            MOVIES_VIEW_TYPE
         }
     }
 
-   inner class TopRatedItemViewHolder (view: View) : RecyclerView.ViewHolder(view){
+    inner class MovieItemViewHolder (view: View) : RecyclerView.ViewHolder(view){
 
         @SuppressLint("CheckResult", "SimpleDateFormat")
-        fun bind(topRatedMovies: TopRatedMovies?, context: TopRatedFragment){
+        fun bind(movieModel: MovieModel?, context: SingleFragment){
 
-            val dateMovie : String = topRatedMovies?.release_date.toString()
+            val dateMovie : String = movieModel?.release_date.toString()
             val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
             val outputFormat: DateFormat = SimpleDateFormat("dd/MMM/yyyy")
             val date = inputFormat.parse(dateMovie)
             val outputDate = outputFormat.format(date)
 
-
             val genreFromAPI = genreFromAPI
 
-            val genresList: List<Int>? = topRatedMovies?.genre_ids
+            val genresList: List<Int>? = movieModel?.genre_ids
 
-            topRatedMovies?.genreArrayList = ArrayList()
+            movieModel?.genreArrayList = ArrayList()
 
             if (genresList != null) {
                 for(i in genresList){
                     val indexGenre = genreFromAPI.indexOfFirst { genre -> genre.id == i}
                     if (indexGenre != -1){
-                        topRatedMovies.genreArrayList.add(genreFromAPI[indexGenre])
+                        movieModel.genreArrayList.add(genreFromAPI[indexGenre])
                     }
                 }
             }
 
 
-            itemView.findViewById<TextView>(R.id.movie_title).text = topRatedMovies?.title
+            itemView.findViewById<TextView>(R.id.movie_title).text = movieModel?.title
             itemView.findViewById<TextView>(R.id.movie_genre).text =
-                topRatedMovies?.genreArrayList?.joinToString(
-                separator = " | ",
-            ) { genre: Genre -> genre.name }
+                movieModel?.genreArrayList?.joinToString(
+                    separator = " | ",
+                ) { genre: Genre -> genre.name }
             itemView.findViewById<TextView>(R.id.movie_release_date).text = outputDate.toString()
-            itemView.findViewById<TextView>(R.id.movie_vote_average).text = topRatedMovies?.vote_average.toString()
-            itemView.findViewById<TextView>(R.id.movie_vote_count).text = topRatedMovies?.vote_count.toString()
+            itemView.findViewById<TextView>(R.id.movie_vote_average).text = movieModel?.vote_average.toString()
+            itemView.findViewById<TextView>(R.id.movie_vote_count).text = movieModel?.vote_count.toString()
 
-            val nowPlayingPosterURL = IMAGE_BASE_URL + topRatedMovies?.poster_path
+            val nowPlayingPosterURL = IMAGE_BASE_URL + movieModel?.poster_path
             Glide.with(itemView.context)
                 .load(nowPlayingPosterURL)
                 .into(itemView.findViewById(R.id.movie_poster));
 
             itemView.setOnClickListener {
                 val intent = Intent(context.activity, MovieDetailsActivity::class.java)
-                intent.putExtra("id",topRatedMovies?.id)
+                intent.putExtra("id",movieModel?.id)
                 context.startActivity(intent)
             }
         }
-
     }
 
     class ConnectionStateItemViewHolder (view: View) :RecyclerView.ViewHolder(view){
@@ -184,5 +175,6 @@ class TopRatedMoviesAdapter(var context:TopRatedFragment,var viewModel: TopRated
         }else if (hasExtraRow && previousState != connectionState){
             notifyItemChanged(itemCount - 1)
         }
+
     }
 }

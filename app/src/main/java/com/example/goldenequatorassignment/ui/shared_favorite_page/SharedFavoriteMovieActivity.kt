@@ -33,7 +33,6 @@ class SharedFavoriteMovieActivity : AppCompatActivity() {
         findViewById<RecyclerView>(R.id.sharedFavoriteActivity_recyclerView).setHasFixedSize(true)
         findViewById<RecyclerView>(R.id.sharedFavoriteActivity_recyclerView).adapter = favoriteMovieAdapter
 
-        Log.i("List Count", favoriteMovieArrayListPage.size.toString())
     }
 
     override fun onSupportNavigateUp(): Boolean {

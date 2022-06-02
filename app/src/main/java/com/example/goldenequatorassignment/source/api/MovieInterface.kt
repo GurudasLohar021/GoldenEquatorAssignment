@@ -5,6 +5,7 @@ import com.example.goldenequatorassignment.model.remote.movie_details.MovieDetai
 import com.example.goldenequatorassignment.model.remote.now_playing.NowPlayingMoviesResponse
 import com.example.goldenequatorassignment.model.remote.popular.PopularMoviesResponse
 import com.example.goldenequatorassignment.model.remote.search_movies.SearchMoviesResponse
+import com.example.goldenequatorassignment.model.remote.single_model.MovieModelResponse
 import com.example.goldenequatorassignment.model.remote.top_rated.TopRatedMovies
 import com.example.goldenequatorassignment.model.remote.top_rated.TopRatedMoviesResponse
 import com.example.goldenequatorassignment.model.remote.upcoming.UpcomingMovies
@@ -37,5 +38,18 @@ interface MovieInterface {
 
     @GET("genre/movie/list")
     fun getGenre() : Single<GenresObjectResponse>
+
+
+    @GET("movie/now_playing")
+    fun getNowPlayingMovieSingle(@Query("page") page : Int) : Single<MovieModelResponse>
+
+    @GET("movie/popular")
+    fun getPopularMovieSingle(@Query("page") page : Int) : Single<MovieModelResponse>
+
+    @GET("movie/top_rated")
+    fun getTopRatedMovieSingle(@Query("page") page : Int) : Single<MovieModelResponse>
+
+    @GET("movie/upcoming")
+    fun getUpcomingMovieSingle(@Query("page") page : Int) : Single<MovieModelResponse>
 
 }

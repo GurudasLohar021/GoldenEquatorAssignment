@@ -11,13 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.goldenequatorassignment.R
 import com.example.goldenequatorassignment.model.local.genres.Genre
-import com.example.goldenequatorassignment.repo.ConnectionState
+import com.example.goldenequatorassignment.state.ConnectionState
 import com.example.goldenequatorassignment.ui.movie_details_page.MovieDetailsActivity
 import com.example.goldenequatorassignment.model.remote.search_movies.SearchMovies
 import com.example.goldenequatorassignment.rest.IMAGE_BASE_URL
 import com.example.goldenequatorassignment.viewmodel.SearchMoviesViewModel
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 
 class SearchMovieAdapter(var context:SearchMovieActivity,var viewModel: SearchMoviesViewModel, val genreFromAPI : List<Genre>, val query: String)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -78,11 +76,13 @@ class SearchMovieAdapter(var context:SearchMovieActivity,var viewModel: SearchMo
         fun bind(searchMovies: SearchMovies?, context: SearchMovieActivity){
 
 
+/*
             val dateMovie : String = searchMovies?.release_date.toString()
             val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
             val outputFormat: DateFormat = SimpleDateFormat("dd/MMM/yyyy")
             val date = inputFormat.parse(dateMovie)
             val outputDate = outputFormat.format(date)
+*/
 
                         val genreFromAPI = genreFromAPI
                         val genresList: List<Int>? = searchMovies?.genre_ids
@@ -103,7 +103,7 @@ class SearchMovieAdapter(var context:SearchMovieActivity,var viewModel: SearchMo
                 searchMovies?.genreArrayList?.joinToString(
                     separator = " | ",
                 ) { genre: Genre -> genre.name }
-            itemView.findViewById<TextView>(R.id.movie_release_date).text = outputDate.toString()
+            itemView.findViewById<TextView>(R.id.movie_release_date).text = searchMovies?.release_date.toString()
             itemView.findViewById<TextView>(R.id.movie_vote_average).text = searchMovies?.vote_average.toString()
             itemView.findViewById<TextView>(R.id.movie_vote_count).text = searchMovies?.vote_count.toString()
 

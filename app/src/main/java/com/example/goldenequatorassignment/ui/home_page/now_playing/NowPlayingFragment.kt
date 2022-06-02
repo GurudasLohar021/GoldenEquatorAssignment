@@ -18,7 +18,7 @@ import com.example.goldenequatorassignment.R
 import com.example.goldenequatorassignment.data.GenreListDataSource
 import com.example.goldenequatorassignment.model.local.genres.Genre
 import com.example.goldenequatorassignment.source.api.MovieInterface
-import com.example.goldenequatorassignment.repo.ConnectionState
+import com.example.goldenequatorassignment.state.ConnectionState
 import com.example.goldenequatorassignment.rest.MovieClient
 import com.example.goldenequatorassignment.repo.NowPlayingMoviesPagedListRepo
 import com.example.goldenequatorassignment.ui.home_page.now_playing.NowPlayingPagedListAdapter

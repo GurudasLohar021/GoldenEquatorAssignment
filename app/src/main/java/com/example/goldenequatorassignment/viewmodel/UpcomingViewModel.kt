@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.goldenequatorassignment.model.remote.upcoming.UpcomingMovies
-import com.example.goldenequatorassignment.repo.ConnectionState
+import com.example.goldenequatorassignment.state.ConnectionState
 import com.example.goldenequatorassignment.repo.UpcomingMoviesRepo
 import io.reactivex.schedulers.Schedulers
 

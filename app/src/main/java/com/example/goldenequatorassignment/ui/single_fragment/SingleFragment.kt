@@ -1,8 +1,7 @@
-package com.example.goldenequatorassignment.ui.home_page.upcoming
+package com.example.goldenequatorassignment.ui.single_fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,42 +17,42 @@ import com.example.goldenequatorassignment.R
 import com.example.goldenequatorassignment.data.GenreListDataSource
 import com.example.goldenequatorassignment.model.local.genres.Genre
 import com.example.goldenequatorassignment.state.ConnectionState
-import com.example.goldenequatorassignment.repo.UpcomingMoviesRepo
+import com.example.goldenequatorassignment.repo.SingleMovieRepo
 import com.example.goldenequatorassignment.rest.MovieClient
 import com.example.goldenequatorassignment.source.api.MovieInterface
-import com.example.goldenequatorassignment.viewmodel.UpcomingViewModel
+import com.example.goldenequatorassignment.viewmodel.SingleMovieViewModel
 
-class UpcomingFragment : Fragment() {
+class SingleFragment (var movieIndex : Int) : Fragment() {
 
-    private lateinit var upcomingMoviesRepo: UpcomingMoviesRepo
+    private lateinit var singleMovieRepo: SingleMovieRepo
 
-    @SuppressLint("CutPasteId", "NotifyDataSetChanged")
+    @SuppressLint("CutPasteId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val rootView =   inflater.inflate(R.layout.fragment_upcoming, container, false)
+        val root = inflater.inflate(R.layout.fragment_single, container, false)
 
         val apiService : MovieInterface =    MovieClient.getClient()
 
-        upcomingMoviesRepo = UpcomingMoviesRepo(apiService)
+        singleMovieRepo = SingleMovieRepo(apiService, movieIndex)
 
         val genreFromAPI : List<Genre> = GenreListDataSource(apiService).fetchGenresList()
 
-        val viewModel = ViewModelProvider(this, GetViewModel(upcomingMoviesRepo))[UpcomingViewModel::class.java]
+        val viewModel = ViewModelProvider(this, GetViewModel(singleMovieRepo))[SingleMovieViewModel::class.java]
 
-        val upcomingMoviesAdapter = UpcomingMoviesAdapter(this,viewModel, genreFromAPI)
+        val singleMovieAdapter = SingleMovieAdapter(this, viewModel, genreFromAPI)
 
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
 
-        rootView.findViewById<RecyclerView>(R.id.upcoming_recyclerView).layoutManager = linearLayoutManager
-        rootView.findViewById<RecyclerView>(R.id.upcoming_recyclerView).setHasFixedSize(true)
-        rootView.findViewById<RecyclerView>(R.id.upcoming_recyclerView).adapter = upcomingMoviesAdapter
+        root.findViewById<RecyclerView>(R.id.single_recyclerView).layoutManager = linearLayoutManager
+        root.findViewById<RecyclerView>(R.id.single_recyclerView).setHasFixedSize(true)
+        root.findViewById<RecyclerView>(R.id.single_recyclerView).adapter = singleMovieAdapter
 
-        viewModel.upcomingMovieList.observe(viewLifecycleOwner, Observer {
-            Log.i("Upcoming", it.toString())
-            upcomingMoviesAdapter.setMovieList(it)
+
+        viewModel.updatedMovieList.observe(viewLifecycleOwner, Observer {
+            singleMovieAdapter.setMovieList(it)
         })
 
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
@@ -61,30 +60,29 @@ class UpcomingFragment : Fragment() {
         })
 
         viewModel.connectionState.observe(viewLifecycleOwner, Observer {
-            rootView.findViewById<ProgressBar>(R.id.upcoming_Progress).visibility =
+            root.findViewById<ProgressBar>(R.id.single_Progress).visibility =
                 if (viewModel.listIsEmpty() && it == ConnectionState.COMPLETED) View.VISIBLE else View.GONE
 
-            rootView.findViewById<TextView>(R.id.upcoming_Error).visibility =
+            root.findViewById<TextView>(R.id.single_Error).visibility =
                 if (viewModel.listIsEmpty() && it == ConnectionState.ERROR) View.VISIBLE else View.GONE
 
             if ( !viewModel.listIsEmpty()){
-                upcomingMoviesAdapter.setConnectionState(it)
+                singleMovieAdapter.setConnectionState(it)
             }
         })
 
-        viewModel.fetchLiveUpcomingMoviesList()
+        viewModel.fetchLiveMovieTypeList()
 
-        return rootView
+        return root
     }
 
-    class GetViewModel constructor(private val upcomingMoviesRepo: UpcomingMoviesRepo): ViewModelProvider.Factory {
+    class GetViewModel constructor(private val singleMovieRepo: SingleMovieRepo): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return if (modelClass.isAssignableFrom(UpcomingViewModel::class.java)) {
-                UpcomingViewModel(this.upcomingMoviesRepo) as T
+            return if (modelClass.isAssignableFrom(SingleMovieViewModel::class.java)) {
+                SingleMovieViewModel(this.singleMovieRepo) as T
             } else {
                 throw IllegalArgumentException("ViewModel Not Found")
             }
         }
     }
-
 }

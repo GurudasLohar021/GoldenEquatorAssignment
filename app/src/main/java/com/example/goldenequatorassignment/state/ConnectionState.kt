@@ -1,4 +1,4 @@
-package com.example.goldenequatorassignment.repo
+package com.example.goldenequatorassignment.state
 
 enum class Status {
     LOADING,

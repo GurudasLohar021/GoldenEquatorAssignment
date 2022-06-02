@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.goldenequatorassignment.R
 import com.example.goldenequatorassignment.model.local.genres.Genre
 import com.example.goldenequatorassignment.model.remote.upcoming.UpcomingMovies
-import com.example.goldenequatorassignment.repo.ConnectionState
+import com.example.goldenequatorassignment.state.ConnectionState
 import com.example.goldenequatorassignment.rest.IMAGE_BASE_URL
 import com.example.goldenequatorassignment.ui.movie_details_page.MovieDetailsActivity
 import com.example.goldenequatorassignment.viewmodel.UpcomingViewModel

@@ -2,7 +2,7 @@ package com.example.goldenequatorassignment.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.example.goldenequatorassignment.repo.ConnectionState
+import com.example.goldenequatorassignment.state.ConnectionState
 import com.example.goldenequatorassignment.model.remote.movie_details.MovieDetails
 import com.example.goldenequatorassignment.repo.MovieDetailsRepo
 import io.reactivex.disposables.CompositeDisposable

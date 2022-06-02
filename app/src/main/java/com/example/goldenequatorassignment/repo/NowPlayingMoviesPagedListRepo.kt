@@ -9,6 +9,7 @@ import com.example.goldenequatorassignment.data.NowPlayingMovieDataSource
 import com.example.goldenequatorassignment.data.NowPlayingMovieDataSourceFactory
 import com.example.goldenequatorassignment.model.now_playing.NowPlayingMovies
 import com.example.goldenequatorassignment.rest.POST_PER_PAGE
+import com.example.goldenequatorassignment.state.ConnectionState
 
 import io.reactivex.disposables.CompositeDisposable
 
@@ -37,7 +38,7 @@ class NowPlayingMoviesPagedListRepo (private val apiService : MovieInterface) {
     }
 
     fun getConnectionState() : LiveData<ConnectionState>{
-        return Transformations.switchMap<NowPlayingMovieDataSource,ConnectionState>(
+        return Transformations.switchMap<NowPlayingMovieDataSource, ConnectionState>(
             nowPlayingDataSourceFactory.nowPlayingMoviesLiveDataSource, NowPlayingMovieDataSource::connectionState
         )
     }

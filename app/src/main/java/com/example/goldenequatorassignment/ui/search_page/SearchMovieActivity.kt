@@ -1,7 +1,6 @@
 package com.example.goldenequatorassignment.ui.search_page
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,7 +15,7 @@ import com.example.goldenequatorassignment.R
 import com.example.goldenequatorassignment.data.GenreListDataSource
 import com.example.goldenequatorassignment.model.local.genres.Genre
 import com.example.goldenequatorassignment.source.api.MovieInterface
-import com.example.goldenequatorassignment.repo.ConnectionState
+import com.example.goldenequatorassignment.state.ConnectionState
 import com.example.goldenequatorassignment.repo.SearchMoviesRepo
 import com.example.goldenequatorassignment.rest.MovieClient
 import com.example.goldenequatorassignment.viewmodel.SearchMoviesViewModel
@@ -37,9 +36,7 @@ class SearchMovieActivity : AppCompatActivity() {
         val closeButtonId : Int = searchView.context.resources.getIdentifier("android:id/search_close_btn", null, null)
         val closeButton = searchView.findViewById<ImageView>(closeButtonId)
 
-
         var querySearch : String = "Bat";
-
 
         val apiService : MovieInterface =    MovieClient.getClient()
 
@@ -48,6 +45,7 @@ class SearchMovieActivity : AppCompatActivity() {
         val genreFromAPI : List<Genre> = GenreListDataSource(apiService).fetchGenresList()
 
         val viewModel = ViewModelProvider(this, GetViewModel(searchMoviesRepo))[SearchMoviesViewModel::class.java]
+
 
         val searchMovieAdapter = SearchMovieAdapter(this,viewModel,genreFromAPI,querySearch)
 
@@ -74,8 +72,6 @@ class SearchMovieActivity : AppCompatActivity() {
             }
         })
 
-
-
         viewModel.searchMoviesList.observe(this, Observer {
             searchMovieAdapter.setMovieList(it)
         })
@@ -99,40 +95,10 @@ class SearchMovieActivity : AppCompatActivity() {
             searchView.setQuery("", false)
             searchView.isIconified
             Toast.makeText(this@SearchMovieActivity, "Search Closed", Toast.LENGTH_LONG).show()
-            //viewModel.page = 0
-            //viewModel.currentList.clear()
-            //searchMovieAdapter.notifyDataSetChanged()
-            //viewModel.searchMoviesList.postValue(null)
-            //viewModel.searchUpdatedList("a")
-
+            searchMovieAdapter.searchMovie.clear()
+            searchMovieAdapter.notifyDataSetChanged()
         }
     }
-
-/*    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-
-        val  inflater = menuInflater
-        inflater.inflate(R.menu.action_bar_menu,menu)
-
-        val manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchItem = menu.findItem(R.id.action_bar_search)
-
-        val searchView = searchItem.actionView as SearchView
-        searchView.setSearchableInfo(manager.getSearchableInfo(componentName))
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                searchView.clearFocus()
-                searchView.setQuery("",false)
-                searchItem.collapseActionView()
-                Toast.makeText(this@SearchMovieActivity, "Search Here", Toast.LENGTH_LONG).show()
-                return true
-            }
-            override fun onQueryTextChange(query: String?): Boolean {
-                return true
-            }
-        })
-        return true
-    }*/
 
     class GetViewModel constructor(private val searchMoviesRepo: SearchMoviesRepo): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

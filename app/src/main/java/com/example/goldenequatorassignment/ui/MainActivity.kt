@@ -14,6 +14,7 @@ import com.example.goldenequatorassignment.ui.home_page.upcoming.UpcomingFragmen
 import com.example.goldenequatorassignment.ui.home_page.popular.PopularFragment
 import com.example.goldenequatorassignment.ui.search_page.SearchMovieActivity
 import com.example.goldenequatorassignment.ui.shared_favorite_page.SharedFavoriteMovieActivity
+import com.example.goldenequatorassignment.ui.single_fragment.SingleFragment
 import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
@@ -25,10 +26,15 @@ class MainActivity : AppCompatActivity() {
         val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
 
         val fragmentAdapter = MainActivityFragmentAdapter(supportFragmentManager)
-        fragmentAdapter.addFragment(NowPlayingFragment(),"Now Playing")
+        fragmentAdapter.addFragment(SingleFragment(1), "Now Playing")
+        fragmentAdapter.addFragment(SingleFragment(2),"Popular")
+        fragmentAdapter.addFragment(SingleFragment(3),"Top Rated")
+        fragmentAdapter.addFragment(SingleFragment(4),"Upcoming")
+
+        /*fragmentAdapter.addFragment(NowPlayingFragment(),"Now Playing")
         fragmentAdapter.addFragment(PopularFragment(),"Popular")
         fragmentAdapter.addFragment(TopRatedFragment(),"Top Rated")
-        fragmentAdapter.addFragment(UpcomingFragment(),"Upcoming")
+        fragmentAdapter.addFragment(UpcomingFragment(),"Upcoming")*/
 
         viewPager.adapter = fragmentAdapter
         tabLayout.setupWithViewPager(viewPager)

@@ -2,7 +2,6 @@ package com.example.goldenequatorassignment.ui.home_page.popular
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,15 +12,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.goldenequatorassignment.R
-import com.example.goldenequatorassignment.repo.ConnectionState
+import com.example.goldenequatorassignment.state.ConnectionState
 import com.example.goldenequatorassignment.ui.movie_details_page.MovieDetailsActivity
 import com.example.goldenequatorassignment.model.local.genres.Genre
 import com.example.goldenequatorassignment.model.remote.popular.PopularMovies
 import com.example.goldenequatorassignment.rest.IMAGE_BASE_URL
-import com.example.goldenequatorassignment.rest.MovieClient
-import io.reactivex.schedulers.Schedulers
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 
 class PopularPagedListAdapter( var context: PopularFragment,val genreFromAPI : List<Genre>)
     : PagedListAdapter<PopularMovies, RecyclerView.ViewHolder>(PopularPagedListAdapter.PopularMovieDiffCallback()){

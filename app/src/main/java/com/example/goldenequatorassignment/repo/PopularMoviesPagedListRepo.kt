@@ -7,10 +7,10 @@ import androidx.paging.PagedList
 import com.example.goldenequatorassignment.data.PopularMoviesDataSource
 import com.example.goldenequatorassignment.data.PopularMoviesDataSourceFactory
 import com.example.goldenequatorassignment.source.api.MovieInterface
-import com.example.goldenequatorassignment.repo.*
 
 import com.example.goldenequatorassignment.model.remote.popular.PopularMovies
 import com.example.goldenequatorassignment.rest.POST_PER_PAGE
+import com.example.goldenequatorassignment.state.ConnectionState
 import io.reactivex.disposables.CompositeDisposable
 
 class PopularMoviesPagedListRepo (private val apiService : MovieInterface)  {

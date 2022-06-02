@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -22,7 +21,7 @@ import com.example.goldenequatorassignment.model.local.genres.Genre
 import com.example.goldenequatorassignment.model.remote.movie_details.MovieDetails
 import com.example.goldenequatorassignment.model.remote.movie_details.SpokenLanguage
 import com.example.goldenequatorassignment.model.sharedPreference.SharedFavoriteMovieDetails
-import com.example.goldenequatorassignment.repo.ConnectionState
+import com.example.goldenequatorassignment.state.ConnectionState
 import com.example.goldenequatorassignment.repo.MovieDetailsRepo
 import com.example.goldenequatorassignment.rest.IMAGE_BASE_URL
 import com.example.goldenequatorassignment.rest.MovieClient
@@ -58,7 +57,6 @@ class MovieDetailsActivity : AppCompatActivity() {
 
        val favoriteMovieArrayList : ArrayList<SharedFavoriteMovieDetails> = SharedPreferenceData().retrieveFavoriteMovie(this)
 
-
         viewModel.movieDetails.observe(this, Observer {
             bindUI(it)
 
@@ -90,6 +88,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             for (i in favoriteMovieArrayList){
                 if (it.id == i.id_movie){
                     findViewById<CheckBox>(R.id.movieDetails_favorite).isChecked = true
+                    //isSelected = true
                     break
                 }
             }
@@ -113,7 +112,8 @@ class MovieDetailsActivity : AppCompatActivity() {
                         FavoriteMovieDatabase.getInstance(this@MovieDetailsActivity).getFavoriteMovieDao().removeFromFavorite(favoriteSelected.id_movie)
                     }*/
 
-                        sharedPreferenceData.removeFavoriteMovie(this@MovieDetailsActivity, sharedFavoriteMovieDetails)
+                        sharedPreferenceData.removeFavoriteMovie(this@MovieDetailsActivity, sharedFavoriteMovieDetails, it.title)
+
                 }
 
                 findViewById<CheckBox>(R.id.movieDetails_favorite).isChecked = isSelected

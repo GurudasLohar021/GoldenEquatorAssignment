@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.example.goldenequatorassignment.source.api.MovieInterface
 import com.example.goldenequatorassignment.model.now_playing.NowPlayingMovies
-import com.example.goldenequatorassignment.repo.ConnectionState
+import com.example.goldenequatorassignment.state.ConnectionState
 import com.example.goldenequatorassignment.rest.FIRST_PAGE
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

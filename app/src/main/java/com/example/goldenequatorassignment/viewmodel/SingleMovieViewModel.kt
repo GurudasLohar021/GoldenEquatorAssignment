@@ -3,23 +3,23 @@ package com.example.goldenequatorassignment.viewmodel
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.goldenequatorassignment.model.remote.single_model.MovieModel
 import com.example.goldenequatorassignment.state.ConnectionState
-import com.example.goldenequatorassignment.model.remote.search_movies.SearchMovies
-import com.example.goldenequatorassignment.repo.SearchMoviesRepo
+import com.example.goldenequatorassignment.repo.SingleMovieRepo
 import io.reactivex.schedulers.Schedulers
 
-class SearchMoviesViewModel(private val searchMoviesRepo: SearchMoviesRepo): ViewModel() {
+class SingleMovieViewModel(private var  singleMovieRepo: SingleMovieRepo) : ViewModel() {
 
-    var searchMoviesList : MutableLiveData<List<SearchMovies>> = MutableLiveData()
-    var currentList: ArrayList<SearchMovies> = ArrayList()
+    var updatedMovieList: MutableLiveData<List<MovieModel>> = MutableLiveData()
+    var currentMovieList: ArrayList<MovieModel> = ArrayList()
     val connectionState : MutableLiveData<ConnectionState> = MutableLiveData()
     val errorMessage = MutableLiveData<String>()
 
-
     var page : Int = 0
 
+
     @SuppressLint("CheckResult")
-    fun searchUpdatedList(query : String){
+    fun fetchLiveMovieTypeList() {
 
         if(connectionState.value == ConnectionState.LOADING){
             return
@@ -29,12 +29,12 @@ class SearchMoviesViewModel(private val searchMoviesRepo: SearchMoviesRepo): Vie
 
         page++
 
-        val responseList = searchMoviesRepo.fetchLiveSearchMovieList(page, query)
+        val responseList = singleMovieRepo.getMoviesList(page)
         responseList.subscribeOn(Schedulers.io())
             .subscribe(
                 {
-                    currentList.addAll(it.results)
-                    searchMoviesList.postValue(currentList)
+                    currentMovieList.addAll(it.results)
+                    updatedMovieList.postValue(currentMovieList)
                     connectionState.postValue(ConnectionState.COMPLETED)
                 },
                 {
@@ -44,9 +44,7 @@ class SearchMoviesViewModel(private val searchMoviesRepo: SearchMoviesRepo): Vie
             )
     }
 
-
-    fun listIsEmpty() : Boolean{
-        return searchMoviesList.value?.isEmpty() ?: true
+    fun listIsEmpty( ): Boolean{
+        return updatedMovieList.value?.isEmpty() ?: true
     }
-
 }
